@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="com.kimi.stockanalysis.dao.FinancailStatementDao">
+	<sql id="columnMap">
+        	code as code,
+        	date as date,
+        	pe as pe,
+        	bvps as bvps,
+        	cps as cps,
+        	roe as roe,
+        	jroe as jroe,
+        	sgpr as sgpr,
+        	smpr as smpr,
+        	dtar as dtar,
+        	opgr as opgr,
+        	toi as toi,
+        	toc as toc,
+        	oi as oi,
+        	oc as oc,
+        	op as op,
+        	tp as tp,
+        	mp as mp,
+        	mpbpc as mpbpc,
+        	ta as ta,
+        	tl as tl,
+        	se as se,
+        	tacf as tacf,
+        	iacf as iacf,
+        	facf as facf,
+        	cnca as cnca
+	</sql>
+
+    <insert id="insert" parameterType="com.kimi.stockanalysis.entity.FinancailStatement">
+        INSERT INTO `financail_statement` (
+        	code ,
+        	date ,
+        	pe ,
+        	bvps ,
+        	cps ,
+        	roe ,
+        	jroe ,
+        	sgpr ,
+        	smpr ,
+        	dtar ,
+        	opgr ,
+        	toi ,
+        	toc ,
+        	oi ,
+        	oc ,
+        	op ,
+        	tp ,
+        	mp ,
+        	mpbpc ,
+        	ta ,
+        	tl ,
+        	se ,
+        	tacf ,
+        	iacf ,
+        	facf ,
+        	cnca 
+        ) VALUES (
+        	#{code} ,
+        	#{date} ,
+        	#{pe} ,
+        	#{bvps} ,
+        	#{cps} ,
+        	#{roe} ,
+        	#{jroe} ,
+        	#{sgpr} ,
+        	#{smpr} ,
+        	#{dtar} ,
+        	#{opgr} ,
+        	#{toi} ,
+        	#{toc} ,
+        	#{oi} ,
+        	#{oc} ,
+        	#{op} ,
+        	#{tp} ,
+        	#{mp} ,
+        	#{mpbpc} ,
+        	#{ta} ,
+        	#{tl} ,
+        	#{se} ,
+        	#{tacf} ,
+        	#{iacf} ,
+        	#{facf} ,
+        	#{cnca} 
+        )
+    </insert>
+
+	<delete id="delete">
+        DELETE FROM `financail_statement`
+        WHERE
+	        code = #{code}  And 
+	        date = #{date} 
+	</delete>
+	
+	<update id="update" parameterType="com.kimi.stockanalysis.entity.FinancailStatement">
+        UPDATE `financail_statement` 
+		SET
+	        pe = #{pe} ,
+	        bvps = #{bvps} ,
+	        cps = #{cps} ,
+	        roe = #{roe} ,
+	        jroe = #{jroe} ,
+	        sgpr = #{sgpr} ,
+	        smpr = #{smpr} ,
+	        dtar = #{dtar} ,
+	        opgr = #{opgr} ,
+	        toi = #{toi} ,
+	        toc = #{toc} ,
+	        oi = #{oi} ,
+	        oc = #{oc} ,
+	        op = #{op} ,
+	        tp = #{tp} ,
+	        mp = #{mp} ,
+	        mpbpc = #{mpbpc} ,
+	        ta = #{ta} ,
+	        tl = #{tl} ,
+	        se = #{se} ,
+	        tacf = #{tacf} ,
+	        iacf = #{iacf} ,
+	        facf = #{facf} ,
+	        cnca = #{cnca} 
+        WHERE
+	        code = #{code}  And 
+	        date = #{date} 
+    </update>
+	
+    <update id="updateSelective" parameterType="com.kimi.stockanalysis.entity.FinancailStatement">
+        UPDATE `financail_statement`
+		SET
+	        code = #{code}  , 
+	        date = #{date} 
+			<if test="pe!=null" >,pe = #{pe}</if>
+			<if test="bvps!=null" >,bvps = #{bvps}</if>
+			<if test="cps!=null" >,cps = #{cps}</if>
+			<if test="roe!=null" >,roe = #{roe}</if>
+			<if test="jroe!=null" >,jroe = #{jroe}</if>
+			<if test="sgpr!=null" >,sgpr = #{sgpr}</if>
+			<if test="smpr!=null" >,smpr = #{smpr}</if>
+			<if test="dtar!=null" >,dtar = #{dtar}</if>
+			<if test="opgr!=null" >,opgr = #{opgr}</if>
+			<if test="toi!=null" >,toi = #{toi}</if>
+			<if test="toc!=null" >,toc = #{toc}</if>
+			<if test="oi!=null" >,oi = #{oi}</if>
+			<if test="oc!=null" >,oc = #{oc}</if>
+			<if test="op!=null" >,op = #{op}</if>
+			<if test="tp!=null" >,tp = #{tp}</if>
+			<if test="mp!=null" >,mp = #{mp}</if>
+			<if test="mpbpc!=null" >,mpbpc = #{mpbpc}</if>
+			<if test="ta!=null" >,ta = #{ta}</if>
+			<if test="tl!=null" >,tl = #{tl}</if>
+			<if test="se!=null" >,se = #{se}</if>
+			<if test="tacf!=null" >,tacf = #{tacf}</if>
+			<if test="iacf!=null" >,iacf = #{iacf}</if>
+			<if test="facf!=null" >,facf = #{facf}</if>
+			<if test="cnca!=null" >,cnca = #{cnca}</if>
+        WHERE 
+	        code = #{code}  And 
+	        date = #{date} 
+    </update>
+	
+    <select id="selectOne" resultType="com.kimi.stockanalysis.entity.FinancailStatement">
+        SELECT <include refid="columnMap"></include>
+		FROM `financail_statement`
+        WHERE 
+	        code = #{code}  And 
+	        date = #{date} 
+    </select>
+	
+    <select id="selectList" resultType="com.kimi.stockanalysis.entity.FinancailStatement">
+        SELECT <include refid="columnMap"></include>
+		FROM `financail_statement`
+        WHERE 1=1
+	        <if test="code!=null" > AND code = #{code}</if>
+	        <if test="date!=null" > AND date = #{date}</if>
+	        <if test="pe!=null" > AND pe = #{pe}</if>
+	        <if test="bvps!=null" > AND bvps = #{bvps}</if>
+	        <if test="cps!=null" > AND cps = #{cps}</if>
+	        <if test="roe!=null" > AND roe = #{roe}</if>
+	        <if test="jroe!=null" > AND jroe = #{jroe}</if>
+	        <if test="sgpr!=null" > AND sgpr = #{sgpr}</if>
+	        <if test="smpr!=null" > AND smpr = #{smpr}</if>
+	        <if test="dtar!=null" > AND dtar = #{dtar}</if>
+	        <if test="opgr!=null" > AND opgr = #{opgr}</if>
+	        <if test="toi!=null" > AND toi = #{toi}</if>
+	        <if test="toc!=null" > AND toc = #{toc}</if>
+	        <if test="oi!=null" > AND oi = #{oi}</if>
+	        <if test="oc!=null" > AND oc = #{oc}</if>
+	        <if test="op!=null" > AND op = #{op}</if>
+	        <if test="tp!=null" > AND tp = #{tp}</if>
+	        <if test="mp!=null" > AND mp = #{mp}</if>
+	        <if test="mpbpc!=null" > AND mpbpc = #{mpbpc}</if>
+	        <if test="ta!=null" > AND ta = #{ta}</if>
+	        <if test="tl!=null" > AND tl = #{tl}</if>
+	        <if test="se!=null" > AND se = #{se}</if>
+	        <if test="tacf!=null" > AND tacf = #{tacf}</if>
+	        <if test="iacf!=null" > AND iacf = #{iacf}</if>
+	        <if test="facf!=null" > AND facf = #{facf}</if>
+	        <if test="cnca!=null" > AND cnca = #{cnca}</if>
+    </select>
+</mapper>
+

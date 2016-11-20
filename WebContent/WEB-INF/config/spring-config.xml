@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+ 		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- context:annotation-config标签可以替代以下四个processor -->
+    <!-- 该 BeanPostProcessor 将自动起作用，对标注 @Autowired 的 Bean 进行自动注入 -->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+	<!-- 该BeanPostProcessor 将自动起作用，对标注@Resource、@PostConstruct 以及 @PreDestroy等 JSR-250 注释的Bean进行自动注入 -->
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+	<!-- bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/ -->
+	<!-- 启用@Required标注 -->	
+	<!-- <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/> -->
+ 	<!-- 包自动扫描机制，自动扫描给定位置内的注解 并提供解析器-->
+	<!-- 自动扫描指定包内的注解并引入以上四个注解处理器进行注解处理，引入后无需再手工添加以上四个注解处理器bean -->
+	<!-- <context:component-scan base-package="com.kimi.stockanalysis*"></context:component-scan> -->
+
+	<!-- 环境变量配置加载 -->
+	<context:property-placeholder location="/WEB-INF/config/jdbc.properties"/>
+	
+	<!-- classpath*与classpath的区别在于classpath*可以加载多个配置 -->
+	
+	<import resource="datasource-config.xml"></import>
+	<import resource="dao-beans.xml"></import>
+	<import resource="service-beans.xml"></import>
+	<import resource="catcher-beans.xml"></import>
+	
+</beans>
