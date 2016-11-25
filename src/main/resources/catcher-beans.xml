@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- service start -->
+    
+    <bean id="taskGenerateService"
+    	class="com.orditech.stockanalysis.catcher.service.TaskGenerateService"></bean>
+    
+   	<bean id="catcherManageService"
+    	class="com.orditech.stockanalysis.catcher.service.CatcherManageService"></bean>
+    
+    <bean id="taskQueueService" 
+    	class="com.orditech.stockanalysis.catcher.service.TaskQueueService"></bean>
+    <!-- service end -->
+    
+    <!-- catcher start -->
+    <bean id="stockInfoCatcher"
+        class="com.orditech.stockanalysis.catcher.StockInfoCatcher">
+    </bean>
+    
+    <bean id="stockInfoDetailCatcher"
+        class="com.orditech.stockanalysis.catcher.StockInfoDetailCatcher">
+    </bean>
+    
+    <bean id="stockRealtimeTradeCatcher"
+        class="com.orditech.stockanalysis.catcher.StockRealtimeTradeCatcher">
+    </bean>
+    
+    <bean id="historyTradeDetailCatcher"
+        class="com.orditech.stockanalysis.catcher.HistoryTradeDetailCatcher">
+    </bean>
+    
+    <bean id="financailStatementCatcher"
+        class="com.orditech.stockanalysis.catcher.FinancailStatementCatcher">
+    </bean>
+    
+    <!-- catcher end -->
+</beans>
