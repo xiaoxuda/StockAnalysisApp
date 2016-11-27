@@ -17,7 +17,7 @@
     <!-- service end -->
     
     <!-- catcher start -->
-    <bean id="stockInfoCatcher"
+    <bean id="stockInfoCatcWher"
         class="com.orditech.stockanalysis.catcher.StockInfoCatcher">
     </bean>
     

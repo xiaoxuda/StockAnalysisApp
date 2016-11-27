@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.orditech.stockanalysis.service;
 
@@ -19,18 +19,18 @@ import com.orditech.stockanalysis.query.StockInfoQuery;
  * @version 1.0
  */
 public class StockDataQueryService {
-	private final Logger LOGGER = LoggerFactory.getLogger(StockDataQueryService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger (StockDataQueryService.class);
 
-	@Autowired
-	private StockInfoDao stockInfoDao;
+    @Autowired
+    private StockInfoDao stockInfoDao;
 
-	public List<StockInfo> fuzzySearchByCodeOrName(StockInfoQuery query){
-		LOGGER.info("股票 模糊查询，参数keyword:{}", query.getKeyword());
-		if(StringUtils.isBlank(query.getKeyword())){
-			return null;
-		}else{
-			return stockInfoDao.fuzzySearchByCodeOrName(query);
-		}
-	}
+    public List<StockInfo> fuzzySearchByCodeOrName (StockInfoQuery query) {
+        LOGGER.info ("股票 模糊查询，参数keyword:{}", query.getKeyword ());
+        if (StringUtils.isBlank (query.getKeyword ())) {
+            return null;
+        } else {
+            return stockInfoDao.fuzzySearchByCodeOrName (query);
+        }
+    }
 
 }

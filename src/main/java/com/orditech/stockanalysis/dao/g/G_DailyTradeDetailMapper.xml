@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 数据库基本操作 -->
 <mapper namespace="com.orditech.stockanalysis.dao.DailyTradeDetailDao">
-	<sql id="columnMap">
+    <sql id="columnMap">
         	code as code,
         	date as date,
         	last_end_price as lastEndPrice,
@@ -41,14 +41,14 @@
         )
     </insert>
 
-	<delete id="delete">
+    <delete id="delete">
         DELETE FROM `daily_trade_detail`
         WHERE
 	        code = #{code}  And 
 	        date = #{date} 
 	</delete>
-	
-	<update id="update" parameterType="com.orditech.stockanalysis.entity.DailyTradeDetail">
+
+    <update id="update" parameterType="com.orditech.stockanalysis.entity.DailyTradeDetail">
         UPDATE `daily_trade_detail` 
 		SET
 	        last_end_price = #{lastEndPrice} ,
@@ -62,45 +62,47 @@
 	        code = #{code}  And 
 	        date = #{date} 
     </update>
-	
+
     <update id="updateSelective" parameterType="com.orditech.stockanalysis.entity.DailyTradeDetail">
         UPDATE `daily_trade_detail`
-		SET
-	        code = #{code}  , 
-	        date = #{date} 
-			<if test="lastEndPrice!=null" >,last_end_price = #{lastEndPrice}</if>
-			<if test="startPrice!=null" >,start_price = #{startPrice}</if>
-			<if test="maxPrice!=null" >,max_price = #{maxPrice}</if>
-			<if test="minPrice!=null" >,min_price = #{minPrice}</if>
-			<if test="endPrice!=null" >,end_price = #{endPrice}</if>
-			<if test="tradeVolume!=null" >,trade_volume = #{tradeVolume}</if>
-			<if test="tradeAmt!=null" >,trade_amt = #{tradeAmt}</if>
-        WHERE 
-	        code = #{code}  And 
-	        date = #{date} 
+        SET
+        code = #{code} ,
+        date = #{date}
+        <if test="lastEndPrice!=null">,last_end_price = #{lastEndPrice}</if>
+        <if test="startPrice!=null">,start_price = #{startPrice}</if>
+        <if test="maxPrice!=null">,max_price = #{maxPrice}</if>
+        <if test="minPrice!=null">,min_price = #{minPrice}</if>
+        <if test="endPrice!=null">,end_price = #{endPrice}</if>
+        <if test="tradeVolume!=null">,trade_volume = #{tradeVolume}</if>
+        <if test="tradeAmt!=null">,trade_amt = #{tradeAmt}</if>
+        WHERE
+        code = #{code} And
+        date = #{date}
     </update>
-	
+
     <select id="selectOne" resultType="com.orditech.stockanalysis.entity.DailyTradeDetail">
-        SELECT <include refid="columnMap"></include>
-		FROM `daily_trade_detail`
-        WHERE 
-	        code = #{code}  And 
-	        date = #{date} 
+        SELECT
+        <include refid="columnMap"></include>
+        FROM `daily_trade_detail`
+        WHERE
+        code = #{code} And
+        date = #{date}
     </select>
-	
+
     <select id="selectList" resultType="com.orditech.stockanalysis.entity.DailyTradeDetail">
-        SELECT <include refid="columnMap"></include>
-		FROM `daily_trade_detail`
+        SELECT
+        <include refid="columnMap"></include>
+        FROM `daily_trade_detail`
         WHERE 1=1
-	        <if test="code!=null" > AND code = #{code}</if>
-	        <if test="date!=null" > AND date = #{date}</if>
-	        <if test="lastEndPrice!=null" > AND last_end_price = #{lastEndPrice}</if>
-	        <if test="startPrice!=null" > AND start_price = #{startPrice}</if>
-	        <if test="maxPrice!=null" > AND max_price = #{maxPrice}</if>
-	        <if test="minPrice!=null" > AND min_price = #{minPrice}</if>
-	        <if test="endPrice!=null" > AND end_price = #{endPrice}</if>
-	        <if test="tradeVolume!=null" > AND trade_volume = #{tradeVolume}</if>
-	        <if test="tradeAmt!=null" > AND trade_amt = #{tradeAmt}</if>
+        <if test="code!=null">AND code = #{code}</if>
+        <if test="date!=null">AND date = #{date}</if>
+        <if test="lastEndPrice!=null">AND last_end_price = #{lastEndPrice}</if>
+        <if test="startPrice!=null">AND start_price = #{startPrice}</if>
+        <if test="maxPrice!=null">AND max_price = #{maxPrice}</if>
+        <if test="minPrice!=null">AND min_price = #{minPrice}</if>
+        <if test="endPrice!=null">AND end_price = #{endPrice}</if>
+        <if test="tradeVolume!=null">AND trade_volume = #{tradeVolume}</if>
+        <if test="tradeAmt!=null">AND trade_amt = #{tradeAmt}</if>
     </select>
 </mapper>
 

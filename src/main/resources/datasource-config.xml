@@ -13,8 +13,8 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	  <property name="dataSource" ref="dataSource" />
-	  <property name="configLocation" value="/WEB-INF/config/mybatis-config.xml" />
-	  <property name="mapperLocations" value="classpath:com/kimi/stockanalysis/dao/**/*Mapper.xml" />
+	  <property name="configLocation" value="/mybatis-config.xml" />
+	  <property name="mapperLocations" value="classpath:com/orditech/stockanalysis/dao/**/*Mapper.xml" />
 	</bean>
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
