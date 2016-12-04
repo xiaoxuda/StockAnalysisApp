@@ -93,11 +93,7 @@ public class TaskGenerateService implements ApplicationContextAware {
             public void run () {
                 while (true) {
                     if (isContinue) {
-                        // commitCatchTaskAll();
-                        commitCatchTask (TaskTypeEnum.SINAJS_PRICE, true);
-                        commitCatchTask (TaskTypeEnum.EASTMONEYNET_STATEMENT, true);
-                        commitCatchTask (TaskTypeEnum.JUCAONET_COMPANY_LIST, true);
-                        commitCatchTask (TaskTypeEnum.JUCAONET_COMPANY_SHARECAPITAL, true);
+                        commitCatchTaskAll();
                     }
 
                     try {
@@ -138,8 +134,8 @@ public class TaskGenerateService implements ApplicationContextAware {
     /**
      * 提交选定类型的任务，可以打破当前任务周期计划
      *
-     * @param typeEnum
-     * @param followCycle
+     * @param typeEnum 任务类型
+     * @param followCycle 是否遵循调度规则
      */
     public void commitCatchTask (TaskTypeEnum typeEnum, boolean followCycle) {
         // 周期判断
