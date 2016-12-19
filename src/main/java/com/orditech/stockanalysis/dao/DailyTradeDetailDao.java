@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.orditech.stockanalysis.dao.g.BaseDao;
 import com.orditech.stockanalysis.entity.DailyTradeDetail;
 
 /**

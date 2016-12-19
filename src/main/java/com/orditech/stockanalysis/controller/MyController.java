@@ -11,6 +11,7 @@ import com.orditech.stockanalysis.service.StockDataShowService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,8 @@ public class MyController {
     private StockDataShowService stockDataShowService;
     @Autowired
     private TaskGenerateService taskGenerateService;
-    // FIXME 做到配置文件中，动态读取
-    private String generateLockKey = "kimi";
+    @Value ("${generateLockKey}")
+    private String generateLockKey;
 
     private static Logger logger = LoggerFactory.getLogger (MyController.class);
 
@@ -59,7 +60,7 @@ public class MyController {
         return gson.toJson (stockInfoList);
     }
 
-    @RequestMapping(value = "/curvedata", method = RequestMethod.POST)
+    @RequestMapping(value = "/curvedata")
     @ResponseBody
     public String getCureData (@RequestParam("code") String code) {
         Map<String, Object> result = stockDataShowService.generateBussinessCurveData (code, 20);
@@ -80,7 +81,7 @@ public class MyController {
         if (TaskTypeEnum.getByCode (typeEnumCode) == null) {
             return "任务类型错误！";
         }
-        if (!generateLockKey.equals (generateLockKey)) {
+        if (!this.generateLockKey.equals (generateLockKey)) {
             return "任务锁错误！";
         }
         taskGenerateService.commitCatchTask (TaskTypeEnum.getByCode (typeEnumCode), false);

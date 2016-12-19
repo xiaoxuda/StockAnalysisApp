@@ -69,6 +69,7 @@ public class TaskGenerateService implements ApplicationContextAware {
     /**
      * 自动注册已设置的爬虫
      */
+    @Override
     public void setApplicationContext (ApplicationContext applicationContext) throws BeansException {
         // TODO Auto-generated method stub
         Map<String, BaseCatcher> beansMap = applicationContext.getBeansOfType (BaseCatcher.class);

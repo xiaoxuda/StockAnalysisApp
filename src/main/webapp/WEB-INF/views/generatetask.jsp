@@ -63,9 +63,10 @@
                 if (data == null) {
                     alert("提交成功！");
                     window.location.href = "/stockcurve.htm";
+                }else{
+                    alert(data);
                 }
-                ;
-            })
+            });
         });
     })
 </script>

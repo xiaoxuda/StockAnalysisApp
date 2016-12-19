@@ -3,7 +3,6 @@ package com.orditech.stockanalysis.dao;
 
 import java.util.List;
 
-import com.orditech.stockanalysis.dao.g.BaseDao;
 import com.orditech.stockanalysis.entity.StockInfo;
 import com.orditech.stockanalysis.query.StockInfoQuery;
 

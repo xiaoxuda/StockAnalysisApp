@@ -3,7 +3,7 @@
 <web-app>
     <context-param>
         <param-name>log4jConfigLocation</param-name>
-        <param-value>/log4j.properties</param-value>
+        <param-value>classpath:/log4j.properties</param-value>
     </context-param>
 
     <context-param>
@@ -14,7 +14,7 @@
     <!-- spring的配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/spring-config.xml</param-value>
+        <param-value>classpath*:/spring-config.xml</param-value>
     </context-param>
 
     <filter>
@@ -47,7 +47,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/spring-mvc-config.xml</param-value>
+            <param-value>classpath:spring-mvc-config.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

@@ -2,7 +2,7 @@ package com.orditech.stockanalysis.service;
 
 import java.util.List;
 
-import com.orditech.stockanalysis.dao.g.BaseDao;
+import com.orditech.stockanalysis.dao.BaseDao;
 
 /**
  * 服务基类
