@@ -20,13 +20,13 @@
     <!-- <context:component-scan base-package="com.orditech.stockanalysis*"></context:component-scan> -->
 
     <!-- 环境变量配置加载 -->
-    <context:property-placeholder location="classpath*:jdbc.properties"/>
+    <context:property-placeholder location="classpath:application.properties"/>
 
     <!-- classpath*与classpath的区别在于classpath*可以加载多个配置 -->
 
-    <import resource="classpath*:datasource-config.xml"></import>
-    <import resource="classpath*:dao-beans.xml"></import>
-    <import resource="classpath*:service-beans.xml"></import>
-    <import resource="classpath*:catcher-beans.xml"></import>
+    <import resource="classpath:datasource-config.xml"></import>
+    <import resource="classpath:dao-beans.xml"></import>
+    <import resource="classpath:service-beans.xml"></import>
+    <import resource="classpath:catcher-beans.xml"></import>
 
 </beans>
