@@ -21,14 +21,14 @@
         	name ,
         	sc ,
         	price ,
-        	modify_time 
+        	modify_time
         ) VALUES (
         	#{code} ,
         	#{type} ,
         	#{name} ,
         	#{sc} ,
         	#{price} ,
-        	#{modifyTime} 
+        	#{modifyTime}
         )
     </insert>
 
@@ -37,7 +37,7 @@
         WHERE
 	        code = #{code} 
 	</delete>
-	
+
 	<update id="update" parameterType="com.orditech.stockanalysis.entity.StockInfo">
         UPDATE `stock_info` 
 		SET
@@ -49,27 +49,27 @@
         WHERE
 	        code = #{code} 
     </update>
-	
+
     <update id="updateSelective" parameterType="com.orditech.stockanalysis.entity.StockInfo">
         UPDATE `stock_info`
 		SET
-	        code = #{code} 
+	        code = #{code}
 			<if test="type!=null" >,type = #{type}</if>
 			<if test="name!=null" >,name = #{name}</if>
 			<if test="sc!=null" >,sc = #{sc}</if>
 			<if test="price!=null" >,price = #{price}</if>
 			<if test="modifyTime!=null" >,modify_time = #{modifyTime}</if>
-        WHERE 
-	        code = #{code} 
+        WHERE
+	        code = #{code}
     </update>
-	
+
     <select id="selectOne" resultType="com.orditech.stockanalysis.entity.StockInfo">
         SELECT <include refid="columnMap"></include>
 		FROM `stock_info`
-        WHERE 
-	        code = #{code} 
+        WHERE
+	        code = #{code}
     </select>
-	
+
     <select id="selectList" resultType="com.orditech.stockanalysis.entity.StockInfo">
         SELECT <include refid="columnMap"></include>
 		FROM `stock_info`
