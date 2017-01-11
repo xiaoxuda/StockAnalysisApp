@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import com.orditech.stockanalysis.catcher.service.CatchTask;
 import com.orditech.stockanalysis.entity.FinancailStatement;
 import com.orditech.stockanalysis.entity.StockInfo;

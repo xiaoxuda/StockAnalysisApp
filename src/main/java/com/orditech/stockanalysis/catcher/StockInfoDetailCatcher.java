@@ -1,8 +1,8 @@
 package com.orditech.stockanalysis.catcher;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import com.orditech.stockanalysis.catcher.service.CatchTask;
 import com.orditech.stockanalysis.entity.StockInfo;
 import com.orditech.stockanalysis.service.StockDataService;

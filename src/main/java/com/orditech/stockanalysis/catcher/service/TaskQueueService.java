@@ -6,11 +6,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 
 /**
  * 任务队列服务
@@ -65,7 +64,7 @@ public class TaskQueueService {
 	/**
 	 * 根据任务类型读取一条任务
 	 * 
-	 * @param key
+	 * @param type
 	 * @return
 	 */
 	public CatchTask getTask(TaskTypeEnum type) {

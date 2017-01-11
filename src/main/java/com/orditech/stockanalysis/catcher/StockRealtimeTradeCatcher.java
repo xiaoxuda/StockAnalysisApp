@@ -6,12 +6,12 @@ package com.orditech.stockanalysis.catcher;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import com.orditech.stockanalysis.catcher.service.CatchTask;
 import com.orditech.stockanalysis.entity.DailyTradeDetail;
 import com.orditech.stockanalysis.entity.StockInfo;

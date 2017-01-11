@@ -9,11 +9,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import com.orditech.stockanalysis.catcher.service.CatchTask;
 import com.orditech.stockanalysis.entity.DailyTradeDetail;
 import com.orditech.stockanalysis.entity.StockInfo;

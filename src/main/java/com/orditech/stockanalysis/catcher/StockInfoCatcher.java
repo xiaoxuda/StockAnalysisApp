@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import com.orditech.stockanalysis.catcher.service.CatchTask;
 import com.orditech.stockanalysis.entity.StockInfo;
 import com.orditech.stockanalysis.service.StockDataService;

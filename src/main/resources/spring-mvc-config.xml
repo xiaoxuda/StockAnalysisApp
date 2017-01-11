@@ -11,6 +11,8 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
+    <context:property-placeholder location="classpath:application.properties"/>
+
     <!-- 通过引入@RequestMapping, @ExceptionHandler支持注解 -->
     <mvc:annotation-driven>
         <!-- 解决@ResponseBody中文乱码 -->

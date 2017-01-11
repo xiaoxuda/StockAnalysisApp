@@ -3,6 +3,9 @@ package com.orditech.stockanalysis.catcher.enums;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Created by kimi on 2017/1/11.
+ */
 public enum TaskTypeEnum {
     /**
      * 抓取财务报表
@@ -154,5 +157,4 @@ public enum TaskTypeEnum {
 
         return (now.getTime () - lastTimePoint.getTime ()) >= this.getCycle ().getMicromillions () ? true : false;
     }
-
 }

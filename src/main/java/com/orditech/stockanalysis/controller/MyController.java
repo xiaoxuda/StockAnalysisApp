@@ -33,7 +33,7 @@ public class MyController {
     private StockDataShowService stockDataShowService;
     @Autowired
     private TaskGenerateService taskGenerateService;
-    @Value ("${generateLockKey}")
+    @Value ("${generate.lock.Key}")
     private String generateLockKey;
 
     private static Logger logger = LoggerFactory.getLogger (MyController.class);
