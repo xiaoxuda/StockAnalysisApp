@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * @author kimi
  */
-public class DailyTradeDetail implements Serializable {
+public class DailyTradeDetail extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
 
     /**
@@ -54,6 +54,10 @@ public class DailyTradeDetail implements Serializable {
      **/
     private java.lang.Double tradeAmt;
 
+    /**
+     * 当前市值
+     */
+    private java.lang.Double marketValue;
 
     public DailyTradeDetail () {
     }
@@ -138,67 +142,12 @@ public class DailyTradeDetail implements Serializable {
         return this.tradeAmt;
     }
 
-    //region toString & equals & clone
-    @Override
-    public String toString () {
-        return "DailyTradeDetail{" +
-                "code=" + code + "," +
-                "date=" + date + "," +
-                "lastEndPrice=" + lastEndPrice + "," +
-                "startPrice=" + startPrice + "," +
-                "maxPrice=" + maxPrice + "," +
-                "minPrice=" + minPrice + "," +
-                "endPrice=" + endPrice + "," +
-                "tradeVolume=" + tradeVolume + "," +
-                "tradeAmt=" + tradeAmt +
-                '}';
+    public Double getMarketValue () {
+        return marketValue;
     }
 
-    @Override
-    public boolean equals (Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof DailyTradeDetail == false) return false;
-        DailyTradeDetail other = (DailyTradeDetail) obj;
-        if (!code.equals (other.code)) return false;
-        if (!date.equals (other.date)) return false;
-        if (!lastEndPrice.equals (other.lastEndPrice)) return false;
-        if (!startPrice.equals (other.startPrice)) return false;
-        if (!maxPrice.equals (other.maxPrice)) return false;
-        if (!minPrice.equals (other.minPrice)) return false;
-        if (!endPrice.equals (other.endPrice)) return false;
-        if (!tradeVolume.equals (other.tradeVolume)) return false;
-        if (!tradeAmt.equals (other.tradeAmt)) return false;
-        return true;
+    public void setMarketValue (Double marketValue) {
+        this.marketValue = marketValue;
     }
-
-    @Override
-    public int hashCode () {
-        int result = super.hashCode ();
-        result = 31 * result + code.hashCode ();
-        result = 31 * result + date.hashCode ();
-        result = 31 * result + lastEndPrice.hashCode ();
-        result = 31 * result + startPrice.hashCode ();
-        result = 31 * result + maxPrice.hashCode ();
-        result = 31 * result + minPrice.hashCode ();
-        result = 31 * result + endPrice.hashCode ();
-        result = 31 * result + tradeVolume.hashCode ();
-        result = 31 * result + tradeAmt.hashCode ();
-        return result;
-    }
-
-    public DailyTradeDetail clone () {
-        DailyTradeDetail newobj = new DailyTradeDetail ();
-        newobj.code = this.code;
-        newobj.date = this.date;
-        newobj.lastEndPrice = this.lastEndPrice;
-        newobj.startPrice = this.startPrice;
-        newobj.maxPrice = this.maxPrice;
-        newobj.minPrice = this.minPrice;
-        newobj.endPrice = this.endPrice;
-        newobj.tradeVolume = this.tradeVolume;
-        newobj.tradeAmt = this.tradeAmt;
-        return newobj;
-    }
-    //endregion
 }
 

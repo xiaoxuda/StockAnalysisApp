@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.orditech.stockanalysis.catcher.enums;
+package com.orditech.enums;
 
 import org.apache.commons.lang.StringUtils;
 

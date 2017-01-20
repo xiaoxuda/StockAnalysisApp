@@ -1,5 +1,7 @@
 package com.orditech.stockanalysis.catcher.enums;
 
+import com.orditech.enums.CycleEnum;
+
 import java.util.Calendar;
 import java.util.Date;
 

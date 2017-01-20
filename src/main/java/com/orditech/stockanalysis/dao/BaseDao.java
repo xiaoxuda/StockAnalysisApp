@@ -6,10 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @param T数据实体类，K主键（如果主键有一个以上则K与T相同）
+ * 数据库操作基类
+ * T数据实体类，K主键（如果主键有一个以上则K与T相同）
  * @author kimi
  * @version 0.99
- * @see 数据库操作基类
  */
 public abstract class BaseDao<T, K> {
     @Autowired
@@ -21,16 +21,16 @@ public abstract class BaseDao<T, K> {
     protected abstract String getNameSpace ();
 
     /**
+     * 获取sqlSession
      * @return
-     * @see 返回sqlSession
      */
     public SqlSessionTemplate getSqlSession () {
         return this.sqlSession;
     }
 
     /**
+     * 用于自动注入
      * @param sqlSession
-     * @see 用于自动注入
      */
     public void setSqlSession (SqlSessionTemplate sqlSession) {
         this.sqlSession = sqlSession;
@@ -46,18 +46,16 @@ public abstract class BaseDao<T, K> {
         return sqlSession.insert (getNameSpace () + ".insert", entity);
     }
 
-    ;
 
     /**
+     * 根据主键删除对应数据
      * @param key
      * @return
-     * @see 根据主键删除对应数据
      */
     public int delete (K key) {
         return sqlSession.delete (getNameSpace () + ".delete", key);
     }
 
-    ;
 
     /**
      * 根据主键更新对应数据条目
@@ -69,7 +67,6 @@ public abstract class BaseDao<T, K> {
         return sqlSession.update (getNameSpace () + ".update", entity);
     }
 
-    ;
 
     /**
      * 根据主键更新对应数据条目，如果entity数据域为null则不更新对应数据域
@@ -81,7 +78,6 @@ public abstract class BaseDao<T, K> {
         return sqlSession.update (getNameSpace () + ".updateSelective", entity);
     }
 
-    ;
 
     /**
      * 根据主键查询对应数据条目
@@ -93,7 +89,6 @@ public abstract class BaseDao<T, K> {
         return sqlSession.selectOne (getNameSpace () + ".selectOne", key);
     }
 
-    ;
 
     /**
      * 根据查询条件返回相应数据条目，entity中值为null的数据域不作为查询条件
@@ -105,5 +100,4 @@ public abstract class BaseDao<T, K> {
         return sqlSession.selectList (getNameSpace () + ".selectList", entity);
     }
 
-    ;
 }

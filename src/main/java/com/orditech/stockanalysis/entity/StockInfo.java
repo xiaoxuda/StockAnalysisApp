@@ -1,16 +1,16 @@
 
 package com.orditech.stockanalysis.entity;
 
-import java.io.Serializable;
-import java.text.ParseException;
-
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
+
+import java.io.Serializable;
+import java.text.ParseException;
 
 /**
  * @author kimi
  */
-public class StockInfo implements Serializable {
+public class StockInfo extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
 
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -118,45 +118,5 @@ public class StockInfo implements Serializable {
         return this.modifyTime;
     }
 
-    //region toString & equals & clone
-    @Override
-    public String toString () {
-        return "StockInfo{" +
-                "code=" + this.code + "," +
-                "type=" + this.type + "," +
-                "name=" + this.name + "," +
-                "sc=" + this.sc + "," +
-                "price=" + this.price + "," +
-                "modifyTime=" + this.modifyTime +
-                '}';
-    }
-
-    @Override
-    public boolean equals (Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof StockInfo == false) return false;
-        StockInfo other = (StockInfo) obj;
-        if (!code.equals (other.code)) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode () {
-        int result = super.hashCode ();
-        result = 31 * result + code.hashCode ();
-        return result;
-    }
-
-    public StockInfo clone () {
-        StockInfo newobj = new StockInfo ();
-        newobj.code = this.code;
-        newobj.type = this.type;
-        newobj.name = this.name;
-        newobj.sc = this.sc;
-        newobj.price = this.price;
-        newobj.modifyTime = this.modifyTime;
-        return newobj;
-    }
-    //endregion
 }
 

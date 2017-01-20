@@ -14,7 +14,8 @@
         	min_price as minPrice,
         	end_price as endPrice,
         	trade_volume as tradeVolume,
-        	trade_amt as tradeAmt
+        	trade_amt as tradeAmt,
+        	market_value as marketValue
 	</sql>
 
     <insert id="insert" parameterType="com.orditech.stockanalysis.entity.DailyTradeDetail">
@@ -27,7 +28,8 @@
         	min_price ,
         	end_price ,
         	trade_volume ,
-        	trade_amt 
+        	trade_amt,
+        	marketValue
         ) VALUES (
         	#{code} ,
         	#{date} ,
@@ -37,7 +39,8 @@
         	#{minPrice} ,
         	#{endPrice} ,
         	#{tradeVolume} ,
-        	#{tradeAmt} 
+        	#{tradeAmt},
+        	#{marketValue}
         )
     </insert>
 
@@ -57,7 +60,8 @@
 	        min_price = #{minPrice} ,
 	        end_price = #{endPrice} ,
 	        trade_volume = #{tradeVolume} ,
-	        trade_amt = #{tradeAmt} 
+	        trade_amt = #{tradeAmt},
+	        market_value = #{marketValue}
         WHERE
 	        code = #{code}  And 
 	        date = #{date} 
@@ -75,6 +79,7 @@
         <if test="endPrice!=null">,end_price = #{endPrice}</if>
         <if test="tradeVolume!=null">,trade_volume = #{tradeVolume}</if>
         <if test="tradeAmt!=null">,trade_amt = #{tradeAmt}</if>
+        <if test="marketValue!=null">,market_value = #{marketValue}</if>
         WHERE
         code = #{code} And
         date = #{date}
@@ -94,15 +99,16 @@
         <include refid="columnMap"></include>
         FROM `daily_trade_detail`
         WHERE 1=1
-        <if test="code!=null">AND code = #{code}</if>
-        <if test="date!=null">AND date = #{date}</if>
-        <if test="lastEndPrice!=null">AND last_end_price = #{lastEndPrice}</if>
-        <if test="startPrice!=null">AND start_price = #{startPrice}</if>
-        <if test="maxPrice!=null">AND max_price = #{maxPrice}</if>
-        <if test="minPrice!=null">AND min_price = #{minPrice}</if>
-        <if test="endPrice!=null">AND end_price = #{endPrice}</if>
-        <if test="tradeVolume!=null">AND trade_volume = #{tradeVolume}</if>
-        <if test="tradeAmt!=null">AND trade_amt = #{tradeAmt}</if>
+        <if test="code!=null"> AND code = #{code}</if>
+        <if test="date!=null"> AND date = #{date}</if>
+        <if test="lastEndPrice!=null"> AND last_end_price = #{lastEndPrice}</if>
+        <if test="startPrice!=null"> AND start_price = #{startPrice}</if>
+        <if test="maxPrice!=null"> AND max_price = #{maxPrice}</if>
+        <if test="minPrice!=null"> AND min_price = #{minPrice}</if>
+        <if test="endPrice!=null"> AND end_price = #{endPrice}</if>
+        <if test="tradeVolume!=null"> AND trade_volume = #{tradeVolume}</if>
+        <if test="tradeAmt!=null"> AND trade_amt = #{tradeAmt}</if>
+        <if test="marketValue!=null"> AND market_value = #{marketValue}</if>
     </select>
 </mapper>
 

@@ -15,5 +15,11 @@
 	        <otherwise>LIMIT 60</otherwise><!-- 默认选取近60天的交易记录 -->
         </choose>
     </select>
+    
+    <update id="udpateMarketValue" parameterType="java.util.HashMap">
+        UPDATE `daily_trade_detail`
+        SET market_value = #{marketValue}
+        WHERE `code` = #{code} AND `date` = #{date}
+    </update>
 </mapper>
 

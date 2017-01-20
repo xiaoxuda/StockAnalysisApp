@@ -32,4 +32,19 @@ public class DailyTradeDetailDao extends BaseDao<DailyTradeDetail, DailyTradeDet
         parMap.put ("dayCount", dayCount);
         return this.getSqlSession ().selectList (this.getNameSpace () + ".selectListByDateDesc", parMap);
     }
+
+    /**
+     * 更新市值
+     * @param code
+     * @param date
+     * @param marketValue
+     * @return
+     */
+    public int udpateMarketValue(String code,String date,double marketValue){
+        Map<String, Object> parMap = new HashMap<String, Object> ();
+        parMap.put ("code", code);
+        parMap.put("date",date);
+        parMap.put ("marketValue", marketValue);
+        return this.getSqlSession ().update (this.getNameSpace () + ".udpateMarketValue", parMap);
+    }
 }

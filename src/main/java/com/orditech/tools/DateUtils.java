@@ -3,10 +3,16 @@
  */
 package com.orditech.tools;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author kimi
  */
 public class DateUtils {
+
+    public static final SimpleDateFormat DAY = new SimpleDateFormat ("yyyy-MM-dd");
+
     /**
      * 获取去年同季度日期
      *
@@ -29,5 +35,18 @@ public class DateUtils {
      */
     public static String getLastDate (String date) throws Exception {
         return null;
+    }
+
+    /**
+     * 格式化日期，格式yyyy-MM-dd
+     *
+     * @param date
+     * @return
+     */
+    public static String getDayStr (Date date) {
+        if (date == null) {
+            return null;
+        }
+        return DAY.format (date);
     }
 }

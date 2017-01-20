@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * @author kimi
  */
-public class FinancailStatement implements Serializable {
+public class FinancailStatement extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
 
     /**
@@ -359,87 +359,5 @@ public class FinancailStatement implements Serializable {
         return this.cnca;
     }
 
-    //region toString & equals & clone
-    @Override
-    public String toString () {
-        return "FinancailStatement{" +
-                "code=" + this.code + "," +
-                "date=" + this.date + "," +
-                "pe=" + this.pe + "," +
-                "bvps=" + this.bvps + "," +
-                "cps=" + this.cps + "," +
-                "roe=" + this.roe + "," +
-                "jroe=" + this.jroe + "," +
-                "sgpr=" + this.sgpr + "," +
-                "smpr=" + this.smpr + "," +
-                "dtar=" + this.dtar + "," +
-                "opgr=" + this.opgr + "," +
-                "toi=" + this.toi + "," +
-                "toc=" + this.toc + "," +
-                "oi=" + this.oi + "," +
-                "oc=" + this.oc + "," +
-                "op=" + this.op + "," +
-                "tp=" + this.tp + "," +
-                "mp=" + this.mp + "," +
-                "mpbpc=" + this.mpbpc + "," +
-                "ta=" + this.ta + "," +
-                "tl=" + this.tl + "," +
-                "se=" + this.se + "," +
-                "tacf=" + this.tacf + "," +
-                "iacf=" + this.iacf + "," +
-                "facf=" + this.facf + "," +
-                "cnca=" + this.cnca +
-                '}';
-    }
-
-    @Override
-    public boolean equals (Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof FinancailStatement == false) return false;
-        FinancailStatement other = (FinancailStatement) obj;
-        if (!code.equals (other.code)) return false;
-        if (!date.equals (other.date)) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode () {
-        int result = super.hashCode ();
-        result = 31 * result + code.hashCode ();
-        result = 31 * result + date.hashCode ();
-        return result;
-    }
-
-    public FinancailStatement clone () {
-        FinancailStatement newobj = new FinancailStatement ();
-        newobj.code = this.code;
-        newobj.date = this.date;
-        newobj.pe = this.pe;
-        newobj.bvps = this.bvps;
-        newobj.cps = this.cps;
-        newobj.roe = this.roe;
-        newobj.jroe = this.jroe;
-        newobj.sgpr = this.sgpr;
-        newobj.smpr = this.smpr;
-        newobj.dtar = this.dtar;
-        newobj.opgr = this.opgr;
-        newobj.toi = this.toi;
-        newobj.toc = this.toc;
-        newobj.oi = this.oi;
-        newobj.oc = this.oc;
-        newobj.op = this.op;
-        newobj.tp = this.tp;
-        newobj.mp = this.mp;
-        newobj.mpbpc = this.mpbpc;
-        newobj.ta = this.ta;
-        newobj.tl = this.tl;
-        newobj.se = this.se;
-        newobj.tacf = this.tacf;
-        newobj.iacf = this.iacf;
-        newobj.facf = this.facf;
-        newobj.cnca = this.cnca;
-        return newobj;
-    }
-    //endregion
 }
 
