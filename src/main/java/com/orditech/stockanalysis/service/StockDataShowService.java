@@ -52,8 +52,8 @@ public class StockDataShowService {
         Map<String, BusinessCurveResult> drarMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_DRAR);
         Map<String, BusinessCurveResult> seMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_SE);
 
-        // 近三个月交易信息
-        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 60);
+        // 近六个月交易信息（大概120个交易日）
+        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 120);
         if (tradeList != null && !tradeList.isEmpty ()) {
             Collections.sort (tradeList, new Comparator<DailyTradeDetail> () {
                 @Override
@@ -101,8 +101,12 @@ public class StockDataShowService {
             Map<String, BusinessCurveResult> result = new HashMap<String, BusinessCurveResult> ();
 
             for (FinancailStatement fs : list) {
+                Object value = field.get (fs);
+                if (value == null) {
+                    continue;
+                }
                 BusinessCurveResult curveResult = new BusinessCurveResult (fs.getCode (), fs.getDate ());
-                curveResult.setAmount (Double.valueOf (field.get (fs).toString ()));
+                curveResult.setAmount (Double.valueOf (value.toString ()));
                 result.put (curveResult.getDate (), curveResult);
             }
             // 计算同比变化率
