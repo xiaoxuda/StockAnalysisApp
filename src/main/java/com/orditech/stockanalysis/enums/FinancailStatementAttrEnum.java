@@ -12,7 +12,8 @@ public enum FinancailStatementAttrEnum {
     ATTR_DRAR ("dtar", "资产负债率"),
     ATTR_TOI ("toi", "营业总收入"),
     ATTR_MP ("mp", "净利润"),
-    ATTR_SE ("se", "股东权益");
+    ATTR_SE ("se", "股东权益"),
+    ATTR_MARKETVALUE("marketValue","市值");
 
     private String name;
     private String comment;
