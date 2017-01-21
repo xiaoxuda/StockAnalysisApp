@@ -77,11 +77,11 @@ public class ScheduleTaskService {
                     if (num >= targetTaskSize) {
                         return;
                     }
-                    if(entity.getTask ().isShutDown ()){
+                    if (entity.getTask ().isShutDown ()) {
                         ++num;
                         continue;
                     }
-                    if(entity.getTask ().isCanceled ()){
+                    if (entity.getTask ().isCanceled ()) {
                         --targetTaskSize;
                         taskPool.remove (num);
                         continue;
@@ -132,15 +132,15 @@ public class ScheduleTaskService {
      * 获取任务执行时间正向排序的插入位置
      *
      * @param nextExecTime
-     * @param start
-     * @param end
+     * @param start        起始索引
+     * @param end          结束索引
      * @return
      */
     private static int getInsertIndex (long nextExecTime, int start, int end) {
         if (taskPool.size () == 0) {
             return 0;
         }
-        if (taskPool.size () < end + 1) {
+        if (taskPool.size () - 1 < end) {
             end = taskPool.size () - 1;
         }
         if (start > end) {
@@ -148,10 +148,8 @@ public class ScheduleTaskService {
         }
         int mid = (start + end) / 2;
         long midNextTime = taskPool.get (mid).getNextExecTime ();
-        if (midNextTime > nextExecTime) {
+        if (nextExecTime < midNextTime) {
             return getInsertIndex (nextExecTime, start, mid - 1);
-        } else if (midNextTime == nextExecTime) {
-            return mid + 1;
         } else {
             return getInsertIndex (nextExecTime, mid + 1, end);
         }

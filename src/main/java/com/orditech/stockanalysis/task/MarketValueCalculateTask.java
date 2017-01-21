@@ -22,7 +22,7 @@ public class MarketValueCalculateTask extends ScheduleTask {
     /**
      * 默认调度周期间隔
      */
-    private static int DefaultCycleInterval = 20;
+    private static int DefaultCycleInterval = 10;
 
     /**
      * 调度周期
