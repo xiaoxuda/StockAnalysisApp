@@ -64,7 +64,7 @@ public class StockDataService {
                 try {
                     cnt = stockInfoDao.insert (entity);
                 } catch (Exception e) {
-                    LOGGER.error ("插入股票财务报表信息失败，参数{}\n{}", entity, e.getMessage ());
+                    LOGGER.error ("插入股票财务报表信息失败，参数{}\n{}", entity, e.getMessage (),e);
                 }
                 return cnt;
             }
