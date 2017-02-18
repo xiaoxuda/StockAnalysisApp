@@ -3,6 +3,7 @@ package com.orditech.stockanalysis;
 import com.orditech.schedule.ScheduleTask;
 import com.orditech.schedule.ScheduleTaskService;
 
+import java.lang.reflect.Array;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,7 +23,6 @@ public class ScheduleTest extends BaseTest{
             public long cycleInterval () {
                 return 1;
             }
-
 
 
             @Override
