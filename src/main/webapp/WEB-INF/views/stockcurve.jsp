@@ -72,8 +72,8 @@
 <body>
 <div id="search_panel" class="input-group">
     <div class="input-group" style="width:420px;">
-        <span class="input-group-addon">股票姓名或代码</span>
-        <input id="keyword" class="form-control" type="text" placeholder="输入公司名或交易代码，我们将为您自动搜索" value=""/>
+        <span class="input-group-addon">股票名称或代码</span>
+        <input id="keyword" class="form-control" type="text" placeholder="输入公司名称或交易代码，我们将为您自动搜索" value=""/>
     </div>
     <ul class="suggestion-list" id="searchResultPanel" style="display: none;"></ul>
 </div>
