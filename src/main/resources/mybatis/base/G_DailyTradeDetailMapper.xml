@@ -29,7 +29,7 @@
         	end_price ,
         	trade_volume ,
         	trade_amt,
-        	marketValue
+        	market_value
         ) VALUES (
         	#{code} ,
         	#{date} ,

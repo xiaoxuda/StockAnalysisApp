@@ -22,7 +22,6 @@
     </style>
 </head>
 <body>
-<p><%=request.getAttribute("test")%>></p>
 <div class="container">
     <div class="input-group" style="margin-bottom:20px;">
         <span class="input-group-addon" style="width:120px;">操作密匙</span>

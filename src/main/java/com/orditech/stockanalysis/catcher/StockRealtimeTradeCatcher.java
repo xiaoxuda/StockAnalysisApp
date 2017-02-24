@@ -65,7 +65,7 @@ public class StockRealtimeTradeCatcher extends BaseCatcher {
                     //保存今日交易信息
                     DailyTradeDetail dtd = new DailyTradeDetail ();
                     dtd.setCode (task.getInfoValue ("code").toString ());
-                    dtd.setDate (new SimpleDateFormat ("yyyy-MM-dd").format (new Date ()));
+                    dtd.setDate (arr[30]);
                     dtd.setStartPrice (Float.valueOf (arr[1]));
                     dtd.setLastEndPrice (Float.valueOf (arr[2]));
                     dtd.setEndPrice (price);
