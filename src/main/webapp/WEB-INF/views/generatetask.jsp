@@ -62,7 +62,7 @@
             $.post("generatetaskcommit.htm", par, function (data, success) {
                 if (!data) {
                     alert("提交成功！");
-                    window.location.href = "/stockcurve.htm";
+                    window.location.href = "stockcurve.htm";
                 }else{
                     alert(data);
                 }
