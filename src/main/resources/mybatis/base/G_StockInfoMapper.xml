@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 数据库基本操作 -->
-<mapper namespace="com.orditech.stockanalysis.dao.StockInfoDao">
+<mapper namespace="cn.orditech.stockanalysis.dao.StockInfoDao">
 	<sql id="columnMap">
         	code as code,
         	type as type,
@@ -14,7 +14,7 @@
         	modify_time as modifyTime
 	</sql>
 
-    <insert id="insert" parameterType="com.orditech.stockanalysis.entity.StockInfo">
+    <insert id="insert" parameterType="cn.orditech.stockanalysis.entity.StockInfo">
         INSERT INTO `stock_info` (
         	code ,
         	type ,
@@ -38,7 +38,7 @@
 	        code = #{code} 
 	</delete>
 
-	<update id="update" parameterType="com.orditech.stockanalysis.entity.StockInfo">
+	<update id="update" parameterType="cn.orditech.stockanalysis.entity.StockInfo">
         UPDATE `stock_info` 
 		SET
 	        type = #{type} ,
@@ -50,7 +50,7 @@
 	        code = #{code} 
     </update>
 
-    <update id="updateSelective" parameterType="com.orditech.stockanalysis.entity.StockInfo">
+    <update id="updateSelective" parameterType="cn.orditech.stockanalysis.entity.StockInfo">
         UPDATE `stock_info`
 		SET
 	        code = #{code}
@@ -63,14 +63,14 @@
 	        code = #{code}
     </update>
 
-    <select id="selectOne" resultType="com.orditech.stockanalysis.entity.StockInfo">
+    <select id="selectOne" resultType="cn.orditech.stockanalysis.entity.StockInfo">
         SELECT <include refid="columnMap"></include>
 		FROM `stock_info`
         WHERE
 	        code = #{code}
     </select>
 
-    <select id="selectList" resultType="com.orditech.stockanalysis.entity.StockInfo">
+    <select id="selectList" resultType="cn.orditech.stockanalysis.entity.StockInfo">
         SELECT <include refid="columnMap"></include>
 		FROM `stock_info`
         WHERE 1=1

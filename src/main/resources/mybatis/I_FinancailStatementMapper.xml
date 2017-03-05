@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 自定义数据库操作	-->
-<mapper namespace="com.orditech.stockanalysis.dao.FinancailStatementDao">
-	<select id="selectListByQuarterDesc" resultType="com.orditech.stockanalysis.entity.FinancailStatement">
+<mapper namespace="cn.orditech.stockanalysis.dao.FinancailStatementDao">
+	<select id="selectListByQuarterDesc" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
 		SELECT <include refid="columnMap"></include>
 		FROM `financail_statement`
 		WHERE code=#{code}

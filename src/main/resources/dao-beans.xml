@@ -5,14 +5,14 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
     <bean id="financailStatementDao"
-        class="com.orditech.stockanalysis.dao.FinancailStatementDao">
+        class="cn.orditech.stockanalysis.dao.FinancailStatementDao">
     </bean>
     
     <bean id="stockInfoDao"
-        class="com.orditech.stockanalysis.dao.StockInfoDao">
+        class="cn.orditech.stockanalysis.dao.StockInfoDao">
     </bean>
     
     <bean id="dailyTradeDetailDao"
-        class="com.orditech.stockanalysis.dao.DailyTradeDetailDao">
+        class="cn.orditech.stockanalysis.dao.DailyTradeDetailDao">
     </bean>
 </beans>
