@@ -17,7 +17,7 @@
     <!-- <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/> -->
     <!-- 包自动扫描机制，自动扫描给定位置内的注解 并提供解析器-->
     <!-- 自动扫描指定包内的注解并引入以上四个注解处理器进行注解处理，引入后无需再手工添加以上四个注解处理器bean -->
-    <!-- <context:component-scan base-package="com.orditech.stockanalysis*"></context:component-scan> -->
+    <!-- <context:component-scan base-package="cn.orditech.stockanalysis*"></context:component-scan> -->
 
     <!-- 环境变量配置加载 -->
     <context:property-placeholder location="classpath:application.properties"/>

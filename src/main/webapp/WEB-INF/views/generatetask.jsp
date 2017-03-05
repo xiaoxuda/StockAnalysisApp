@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@page import="com.orditech.stockanalysis.catcher.enums.TaskTypeEnum" %>
+<%@page import="cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum" %>
 <!DOCTYPE html>
 <html>
 <head>

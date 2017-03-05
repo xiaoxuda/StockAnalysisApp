@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 自定义数据库操作	-->
-<mapper namespace="com.orditech.stockanalysis.dao.DailyTradeDetailDao">
-    <select id="selectListByDateDesc" resultType="com.orditech.stockanalysis.entity.DailyTradeDetail">
+<mapper namespace="cn.orditech.stockanalysis.dao.DailyTradeDetailDao">
+    <select id="selectListByDateDesc" resultType="cn.orditech.stockanalysis.entity.DailyTradeDetail">
         SELECT <include refid="columnMap"></include>
 		FROM `daily_trade_detail`
         WHERE code = #{code}

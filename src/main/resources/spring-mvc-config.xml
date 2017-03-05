@@ -25,13 +25,13 @@
     <!-- 使容器使用spring框架提供的servlet来处理静态文件 -->
     <mvc:default-servlet-handler/>
     <!-- 包自动扫描机制，自动扫描给定位置内的注解 并提供解析器-->
-    <context:component-scan base-package="com.orditech.stockanalysis.controller"></context:component-scan>
+    <context:component-scan base-package="cn.orditech.stockanalysis.controller"></context:component-scan>
 
     <!-- 视图解析会按order从小到大尝试使用相应的解析器解析view，解析到就停止 -->
     <!-- combine different view technologies in a web application -->
     <!--
     <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
-        <property name="basename" value="com.orditech.controller.views"/>
+        <property name="basename" value="cn.orditech.controller.views"/>
         <property name="order" value="1"/>
     </bean>
      -->

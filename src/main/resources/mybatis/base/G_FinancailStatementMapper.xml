@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 数据库基本操作 -->
-<mapper namespace="com.orditech.stockanalysis.dao.FinancailStatementDao">
+<mapper namespace="cn.orditech.stockanalysis.dao.FinancailStatementDao">
 	<sql id="columnMap">
         	code as code,
         	date as date,
@@ -34,7 +34,7 @@
         	cnca as cnca
 	</sql>
 
-    <insert id="insert" parameterType="com.orditech.stockanalysis.entity.FinancailStatement">
+    <insert id="insert" parameterType="cn.orditech.stockanalysis.entity.FinancailStatement">
         INSERT INTO `financail_statement` (
         	code ,
         	date ,
@@ -99,7 +99,7 @@
 	        date = #{date} 
 	</delete>
 	
-	<update id="update" parameterType="com.orditech.stockanalysis.entity.FinancailStatement">
+	<update id="update" parameterType="cn.orditech.stockanalysis.entity.FinancailStatement">
         UPDATE `financail_statement` 
 		SET
 	        pe = #{pe} ,
@@ -131,7 +131,7 @@
 	        date = #{date} 
     </update>
 	
-    <update id="updateSelective" parameterType="com.orditech.stockanalysis.entity.FinancailStatement">
+    <update id="updateSelective" parameterType="cn.orditech.stockanalysis.entity.FinancailStatement">
         UPDATE `financail_statement`
 		SET
 	        code = #{code}  , 
@@ -165,7 +165,7 @@
 	        date = #{date} 
     </update>
 	
-    <select id="selectOne" resultType="com.orditech.stockanalysis.entity.FinancailStatement">
+    <select id="selectOne" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
         SELECT <include refid="columnMap"></include>
 		FROM `financail_statement`
         WHERE 
@@ -173,7 +173,7 @@
 	        date = #{date} 
     </select>
 	
-    <select id="selectList" resultType="com.orditech.stockanalysis.entity.FinancailStatement">
+    <select id="selectList" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
         SELECT <include refid="columnMap"></include>
 		FROM `financail_statement`
         WHERE 1=1

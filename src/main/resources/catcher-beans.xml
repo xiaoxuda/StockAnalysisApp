@@ -7,34 +7,34 @@
     <!-- service start -->
     
     <bean id="taskGenerateService"
-    	class="com.orditech.stockanalysis.catcher.service.TaskGenerateService"></bean>
+    	class="cn.orditech.stockanalysis.catcher.service.TaskGenerateService"></bean>
     
    	<bean id="catcherManageService"
-    	class="com.orditech.stockanalysis.catcher.service.CatcherManageService"></bean>
+    	class="cn.orditech.stockanalysis.catcher.service.CatcherManageService"></bean>
     
     <bean id="taskQueueService" 
-    	class="com.orditech.stockanalysis.catcher.service.TaskQueueService"></bean>
+    	class="cn.orditech.stockanalysis.catcher.service.TaskQueueService"></bean>
     <!-- service end -->
     
     <!-- catcher start -->
     <bean id="stockInfoCatcWher"
-        class="com.orditech.stockanalysis.catcher.StockInfoCatcher">
+        class="cn.orditech.stockanalysis.catcher.StockInfoCatcher">
     </bean>
     
     <bean id="stockInfoDetailCatcher"
-        class="com.orditech.stockanalysis.catcher.StockInfoDetailCatcher">
+        class="cn.orditech.stockanalysis.catcher.StockInfoDetailCatcher">
     </bean>
     
     <bean id="stockRealtimeTradeCatcher"
-        class="com.orditech.stockanalysis.catcher.StockRealtimeTradeCatcher">
+        class="cn.orditech.stockanalysis.catcher.StockRealtimeTradeCatcher">
     </bean>
     
     <bean id="historyTradeDetailCatcher"
-        class="com.orditech.stockanalysis.catcher.HistoryTradeDetailCatcher">
+        class="cn.orditech.stockanalysis.catcher.HistoryTradeDetailCatcher">
     </bean>
     
     <bean id="financailStatementCatcher"
-        class="com.orditech.stockanalysis.catcher.FinancailStatementCatcher">
+        class="cn.orditech.stockanalysis.catcher.FinancailStatementCatcher">
     </bean>
     
     <!-- catcher end -->
