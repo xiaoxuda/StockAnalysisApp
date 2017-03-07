@@ -388,17 +388,15 @@
         if ($(this).val().length == 0) {
             //展示推荐股票
             var list=[];
-            list.push({name:'格力电器',code:'000651'});
+			list.push({name:'贵州茅台',code:'600519'});
+			list.push({name:'云南白药',code:'000538'});
             list.push({name:'复兴医药',code:'600196'});
+			list.push({name:'中国平安',code:'601318'});
+			list.push({name:'格力电器',code:'000651'});
             list.push({name:'双汇发展',code:'000895'});
-            list.push({name:'云南白药',code:'000538'});
-            list.push({name:'五粮液',code:'000858'});
-            list.push({name:'贵州茅台',code:'600519'});
             list.push({name:'伊利股份',code:'600887'});
             list.push({name:'金风科技',code:'002202'});
-            list.push({name:'东方日升',code:'300118'});
             list.push({name:'阳光电源',code:'300274'});
-
             showSuggesstStocks(list);
         } else {
             //根据输入获取公司信息
