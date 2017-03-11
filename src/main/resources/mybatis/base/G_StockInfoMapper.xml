@@ -10,8 +10,7 @@
         	type as type,
         	name as name,
         	sc as sc,
-        	price as price,
-        	modify_time as modifyTime
+        	price as price
 	</sql>
 
     <insert id="insert" parameterType="cn.orditech.stockanalysis.entity.StockInfo">
@@ -20,15 +19,13 @@
         	type ,
         	name ,
         	sc ,
-        	price ,
-        	modify_time
+        	price
         ) VALUES (
         	#{code} ,
         	#{type} ,
         	#{name} ,
         	#{sc} ,
-        	#{price} ,
-        	#{modifyTime}
+        	#{price}
         )
     </insert>
 
@@ -44,8 +41,7 @@
 	        type = #{type} ,
 	        name = #{name} ,
 	        sc = #{sc} ,
-	        price = #{price} ,
-	        modify_time = #{modifyTime} 
+	        price = #{price}
         WHERE
 	        code = #{code} 
     </update>
@@ -58,7 +54,6 @@
 			<if test="name!=null" >,name = #{name}</if>
 			<if test="sc!=null" >,sc = #{sc}</if>
 			<if test="price!=null" >,price = #{price}</if>
-			<if test="modifyTime!=null" >,modify_time = #{modifyTime}</if>
         WHERE
 	        code = #{code}
     </update>
@@ -79,7 +74,6 @@
 	        <if test="name!=null" > AND name = #{name}</if>
 	        <if test="sc!=null" > AND sc = #{sc}</if>
 	        <if test="price!=null" > AND price = #{price}</if>
-	        <if test="modifyTime!=null" > AND modify_time = #{modifyTime}</if>
     </select>
 </mapper>
 

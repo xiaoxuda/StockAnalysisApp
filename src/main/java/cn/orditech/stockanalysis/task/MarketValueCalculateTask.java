@@ -7,6 +7,7 @@ import cn.orditech.stockanalysis.dao.StockInfoDao;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.tools.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class MarketValueCalculateTask extends ScheduleTask {
         for(StockInfo stockInfo : stockInfos){
             DailyTradeDetail param = new DailyTradeDetail ();
             param.setCode (stockInfo.getCode ());
-            param.setDate (DateUtils.getDayStr(stockInfo.getModifyTime ()));
+            param.setDate (DateUtils.getDayStr(new Date ()));
             DailyTradeDetail dailyTradeDetail = dailyTradeDetailDao.selectOne (param);
             if(dailyTradeDetail!=null){
                 double marketValue = stockInfo.getSc ()!=null

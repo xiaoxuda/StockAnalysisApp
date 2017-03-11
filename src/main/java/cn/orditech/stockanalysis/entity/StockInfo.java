@@ -1,11 +1,7 @@
 
 package cn.orditech.stockanalysis.entity;
 
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-
 import java.io.Serializable;
-import java.text.ParseException;
 
 /**
  * @author kimi
@@ -42,12 +38,6 @@ public class StockInfo extends BaseEntity implements Serializable {
      * 当前价格
      **/
     private java.lang.Float price;
-
-    /**
-     * 最后修改时间
-     **/
-    private java.util.Date modifyTime;
-
 
     public StockInfo () {
     }
@@ -96,26 +86,6 @@ public class StockInfo extends BaseEntity implements Serializable {
 
     public java.lang.Float getPrice () {
         return this.price;
-    }
-
-    public String getModifyTimeString () {
-        return getModifyTime () == null ? null : DateFormatUtils.format (getModifyTime (), FORMAT_MODIFY_TIME);
-    }
-
-    public void setModifyTimeString (String value) {
-        try {
-            setModifyTime (DateUtils.parseDate (value, new String[]{FORMAT_MODIFY_TIME, DATE_TIME_FORMAT}));
-        } catch (ParseException e) {
-            e.printStackTrace ();
-        }
-    }
-
-    public void setModifyTime (java.util.Date value) {
-        this.modifyTime = value;
-    }
-
-    public java.util.Date getModifyTime () {
-        return this.modifyTime;
     }
 
 }
