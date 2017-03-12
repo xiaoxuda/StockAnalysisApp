@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -34,8 +35,8 @@ public class ScheduleTaskService {
     /**
      * 任务执行器
      */
-    private static final ThreadPoolExecutor executor = (ThreadPoolExecutor)
-            Executors.newCachedThreadPool ();
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (1,4,60L,TimeUnit.SECONDS,
+            new LinkedBlockingQueue<Runnable> ());
 
 
     /**

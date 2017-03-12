@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author kimi
  * @version 0.99
  * @see BaseDao，定义基本操作以外的数据库操作
  */
+@Repository
 public class DailyTradeDetailDao extends BaseDao<DailyTradeDetail, DailyTradeDetail> {
 
     /**

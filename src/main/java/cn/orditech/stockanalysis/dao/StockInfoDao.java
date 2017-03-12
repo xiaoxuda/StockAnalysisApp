@@ -5,12 +5,14 @@ import java.util.List;
 
 import cn.orditech.stockanalysis.query.StockInfoQuery;
 import cn.orditech.stockanalysis.entity.StockInfo;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author kimi
  * @version 1.0
  * @see BaseDao 继承基类，定义基本操作以外的数据库操作
  */
+@Repository
 public class StockInfoDao extends BaseDao<StockInfo, java.lang.String> {
 
     /**

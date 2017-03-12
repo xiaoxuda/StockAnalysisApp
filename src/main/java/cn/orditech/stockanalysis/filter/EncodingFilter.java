@@ -1,4 +1,4 @@
-package cn.orditech.filter;
+package cn.orditech.stockanalysis.filter;
 
 import javax.servlet.*;
 import java.io.IOException;

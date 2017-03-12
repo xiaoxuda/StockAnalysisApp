@@ -102,8 +102,8 @@
                         generateBusinessChart('toi_chart', '营业收入（万元）', srcData['toiMap'], 10000);
                         generateBusinessChart('mp_chart', '净利润（万元）', srcData['mpMap'], 10000);
                         generateBusinessChart('sgpr_chart', '销售毛利率', srcData['sgprMap']);
-                        generateTradeAcountChart("trade_chart",'endPrice', '股价与交易量','交易量','股票价格', srcData['tradeList']);
-                        generateTradeAcountChart("market_value_chart",'marketValue', '市值与交易量','交易量','市值', srcData['tradeList']);
+                        generateTradeAcountChart("trade_chart", 'endPrice', '股价与交易量', '交易量', '股票价格', srcData['tradeList']);
+                        generateTradeAcountChart("market_value_chart", 'marketValue', '市值与交易量', '交易量', '市值', srcData['tradeList']);
                     } else {
                         alert("抱歉，服务器出错了，没有找到您要的数据！");
                     }
@@ -248,7 +248,7 @@
      * @param srcData 绘图数据
      * @param divisor 单位转换除数
      */
-    function generateTradeAcountChart(container,attrName, title,rTitle,lTitle, srcData) {
+    function generateTradeAcountChart(container, attrName, title, rTitle, lTitle, srcData) {
         var xData = [];
         var sDatas = [];
 
@@ -387,16 +387,17 @@
     $('#keyword').bind('input', function (e) {
         if ($(this).val().length == 0) {
             //展示推荐股票
-            var list=[];
-			list.push({name:'贵州茅台',code:'600519'});
-			list.push({name:'云南白药',code:'000538'});
-            list.push({name:'复兴医药',code:'600196'});
-			list.push({name:'中国平安',code:'601318'});
-			list.push({name:'格力电器',code:'000651'});
-            list.push({name:'双汇发展',code:'000895'});
-            list.push({name:'伊利股份',code:'600887'});
-            list.push({name:'金风科技',code:'002202'});
-            list.push({name:'阳光电源',code:'300274'});
+            var list = [];
+            list.push({name: '贵州茅台', code: '600519'});
+            list.push({name: '云南白药', code: '000538'});
+            list.push({name: '复兴医药', code: '600196'});
+            list.push({name: '中国平安', code: '601318'});
+            list.push({name: '格力电器', code: '000651'});
+            list.push({name: '双汇发展', code: '000895'});
+            list.push({name: '招商银行', code: '600036'});
+            list.push({name: '阳光电源', code: '300274'});
+            list.push({name: '金风科技', code: '002202'});
+            list.push({name: '伊利股份', code: '600887'});
             showSuggesstStocks(list);
         } else {
             //根据输入获取公司信息

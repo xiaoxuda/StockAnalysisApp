@@ -1,4 +1,4 @@
-package cn.orditech.stockanalysis;
+package cn.orditech.stockanalysis.test;
 
 /**
  * Created by kimi on 2017/1/18.

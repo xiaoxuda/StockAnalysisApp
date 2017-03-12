@@ -1,14 +1,15 @@
-package cn.orditech.stockanalysis;
+package cn.orditech.stockanalysis.test;
 
 import cn.orditech.schedule.ScheduleTask;
 import cn.orditech.schedule.ScheduleTaskService;
+import cn.orditech.stockanalysis.test.BaseTest;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kimi on 2017/1/18.
  */
-public class ScheduleTest extends BaseTest{
+public class ScheduleTest extends BaseTest {
     public static void main(String args[]){
         ScheduleTask task = new ScheduleTask () {
             private int num;

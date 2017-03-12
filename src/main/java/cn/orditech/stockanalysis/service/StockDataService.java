@@ -3,25 +3,26 @@
  */
 package cn.orditech.stockanalysis.service;
 
+import cn.orditech.stockanalysis.dao.DailyTradeDetailDao;
 import cn.orditech.stockanalysis.dao.FinancailStatementDao;
+import cn.orditech.stockanalysis.dao.StockInfoDao;
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
+import cn.orditech.stockanalysis.entity.FinancailStatement;
+import cn.orditech.stockanalysis.entity.StockInfo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import cn.orditech.stockanalysis.dao.DailyTradeDetailDao;
-import cn.orditech.stockanalysis.dao.StockInfoDao;
-import cn.orditech.stockanalysis.entity.FinancailStatement;
-import cn.orditech.stockanalysis.entity.StockInfo;
 
 /**
  * @author kimi
  * @version 1.0
  */
+@Service
 public class StockDataService {
     private final Logger LOGGER = LoggerFactory.getLogger (StockDataService.class);
 

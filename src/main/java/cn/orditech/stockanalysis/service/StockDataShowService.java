@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -23,6 +24,7 @@ import java.util.*;
  *
  * @author kimi
  */
+@Service
 public class StockDataShowService {
     private Logger LOGGER = LoggerFactory.getLogger (StockDataShowService.class);
 

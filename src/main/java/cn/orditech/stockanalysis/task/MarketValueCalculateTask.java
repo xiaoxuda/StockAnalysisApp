@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 市值计算任务
  * Created by kimi on 2017/1/18.
  */
 public class MarketValueCalculateTask extends ScheduleTask {
