@@ -392,12 +392,15 @@
             list.push({name: '云南白药', code: '000538'});
             list.push({name: '复兴医药', code: '600196'});
             list.push({name: '中国平安', code: '601318'});
-            list.push({name: '格力电器', code: '000651'});
             list.push({name: '双汇发展', code: '000895'});
+            list.push({name: '格力电器', code: '000651'});
             list.push({name: '招商银行', code: '600036'});
+            list.push({name: '华域汽车', code: '600741'});
+            list.push({name: '上汽集团', code: '600104'});
+            list.push({name: '长安汽车', code: '000625'});
+            list.push({name: '伊利股份', code: '600887'});
             list.push({name: '阳光电源', code: '300274'});
             list.push({name: '金风科技', code: '002202'});
-            list.push({name: '伊利股份', code: '600887'});
             showSuggesstStocks(list);
         } else {
             //根据输入获取公司信息
