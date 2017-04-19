@@ -95,7 +95,7 @@ public class TaskGenerateService implements ApplicationContextAware {
                     if (isContinue) {
                         commitCatchTaskAll();
                     }
-
+                    LOGGER.info("任务生成");
                     try {
                         Thread.sleep (time_gap);
                     } catch (InterruptedException e) {
@@ -185,6 +185,7 @@ public class TaskGenerateService implements ApplicationContextAware {
                 for (StockInfo stockInfo : taskInfoList) {
                     commitCatchTask (entry.getKey (), stockInfo);
                 }
+                LOGGER.info("提交{}任务",entry.getKey ().getDesc ());
             }
         }
     }

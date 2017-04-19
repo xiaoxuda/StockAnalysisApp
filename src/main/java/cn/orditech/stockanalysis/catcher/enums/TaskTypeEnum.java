@@ -12,7 +12,7 @@ public enum TaskTypeEnum {
     /**
      * 抓取财务报表
      **/
-    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.DAY, new CycleRule () {
+    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.HOUR, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上5点工作
@@ -23,7 +23,7 @@ public enum TaskTypeEnum {
     /**
      * 抓取上市公司列表
      **/
-    JUCAONET_COMPANY_LIST ("jucaonet_company_list", "股票列表", CycleEnum.DAY, new CycleRule () {
+    JUCAONET_COMPANY_LIST ("jucaonet_company_list", "股票列表", CycleEnum.HOUR, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上2点工作
@@ -34,7 +34,7 @@ public enum TaskTypeEnum {
     /**
      * 获取公司股本数量
      **/
-    JUCAONET_COMPANY_SHARECAPITAL ("jucaonet_company_sharecapital", "股本", CycleEnum.DAY, new CycleRule () {
+    JUCAONET_COMPANY_SHARECAPITAL ("jucaonet_company_sharecapital", "股本", CycleEnum.HOUR, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上4点工作
@@ -61,7 +61,7 @@ public enum TaskTypeEnum {
     /**
      * 获取股票历史交易信息
      **/
-    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "股票历史交易信息", CycleEnum.DAY, new CycleRule () {
+    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "股票历史交易信息", CycleEnum.HOUR, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天晚上十点开始工作
@@ -155,8 +155,7 @@ public enum TaskTypeEnum {
         if (null == lastTimePoint) {
             return true;
         }
-        Date now = new Date ();
 
-        return (now.getTime () - lastTimePoint.getTime ()) >= this.getCycle ().getMicromillions ();
+        return (System.currentTimeMillis () - lastTimePoint.getTime ()) >= this.getCycle ().getMicromillions ();
     }
 }
