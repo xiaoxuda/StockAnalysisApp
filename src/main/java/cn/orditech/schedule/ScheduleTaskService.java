@@ -42,14 +42,14 @@ public class ScheduleTaskService {
     /**
      * 周期调度器，负责时间周期的控制，定期发起任务生产
      */
-    static class Sceduler implements Runnable {
+    static class Scheduler implements Runnable {
 
         @Override
         public void run () {
             while (true) {
                 try {
                     new Thread (new TaskProductor ()).start ();
-
+                    logger.info ("定时调度");
                     TimeUnit.SECONDS.sleep (MIN_TIME_UNIT);
                 } catch (InterruptedException e) {
                     e.printStackTrace ();
@@ -100,7 +100,7 @@ public class ScheduleTaskService {
      * 启动任务调度器
      */
     static {
-        new Thread (new Sceduler ()).start ();
+        new Thread (new Scheduler ()).start ();
     }
 
     /**

@@ -3,13 +3,8 @@
  */
 package cn.orditech.stockanalysis.catcher.service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
+import cn.orditech.schedule.ScheduleTask;
+import cn.orditech.schedule.ScheduleTaskService;
 import cn.orditech.stockanalysis.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import cn.orditech.stockanalysis.dao.StockInfoDao;
@@ -21,6 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 任务生成器，按照不同任务的时间策略定时生成数据抓取任务
  *
@@ -31,24 +32,13 @@ public class TaskGenerateService implements ApplicationContextAware {
 
     @Autowired
     private StockInfoDao stockInfoDao;
-
     @Autowired
     private TaskQueueService taskQueueService;
 
     /**
-     * 生成任务执行开关
-     **/
-    private boolean isContinue = true;
-
-    /**
-     * 任务生成器是否在运行
+     * 默认调度周期间隔
      */
-    private boolean isRunning = false;
-
-    /**
-     * 调度周期 ，毫秒
-     **/
-    private long time_gap = 5 * 60 * 1000L;
+    private static int DefaultCycleInterval = 5;
 
     /**
      * 上次调度时间
@@ -60,9 +50,15 @@ public class TaskGenerateService implements ApplicationContextAware {
      **/
     private Map<TaskTypeEnum, BaseCatcher> catcherMap = new HashMap<TaskTypeEnum, BaseCatcher> ();
 
+    private ScheduleGenerateTask scheduleGenerateTask;
+
     @PostConstruct
     public void init () {
         // FIXME 考虑将调度时间落入数据库，启动时从数据库读取
+
+        //提交定时任务
+        scheduleGenerateTask = new ScheduleGenerateTask ();
+        ScheduleTaskService.commitTask (scheduleGenerateTask);
     }
 
     /**
@@ -77,45 +73,6 @@ public class TaskGenerateService implements ApplicationContextAware {
                 catcherMap.put (catcher.getTaskType (), catcher);
             }
         }
-    }
-
-    /**
-     * 启动生成器
-     **/
-    public void startGenerator () {
-
-        if (isRunning == true) {
-            return;
-        }
-
-        Thread thread = new Thread ("taskGenerate") {
-            @Override
-            public void run () {
-                while (true) {
-                    if (isContinue) {
-                        commitCatchTaskAll();
-                    }
-                    LOGGER.info("任务生成");
-                    try {
-                        Thread.sleep (time_gap);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        LOGGER.error ("taskGenerate,异常信息{}", e.getMessage ());
-                    }
-
-                }
-            }
-        };
-        thread.start ();
-        isRunning = true;
-    }
-
-    public void reStartGenerator () {
-        this.isContinue = true;
-    }
-
-    public void closeGenerator () {
-        this.isContinue = false;
     }
 
     /**
@@ -168,13 +125,9 @@ public class TaskGenerateService implements ApplicationContextAware {
         // 生成股票列表抓取任务
         if (refreshCycle (TaskTypeEnum.JUCAONET_COMPANY_LIST)) {
             commitCatchTask (TaskTypeEnum.JUCAONET_COMPANY_LIST, null);
+            LOGGER.info("提交{}任务",TaskTypeEnum.JUCAONET_COMPANY_LIST.getDesc ());
         }
 
-        // 若没有查询到股票信息则清除调度信息
-        List<StockInfo> taskInfoList = stockInfoDao.selectList (new StockInfo ());
-        if (taskInfoList == null || taskInfoList.size () == 0) {
-            return;
-        }
         for (Map.Entry<TaskTypeEnum, BaseCatcher> entry : catcherMap.entrySet ()) {
             // 跳过股票列表爬虫
             if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (entry.getKey ())) {
@@ -182,6 +135,11 @@ public class TaskGenerateService implements ApplicationContextAware {
             }
 
             if (refreshCycle (entry.getKey ())) {
+                // 若没有查询到股票信息则清除调度信息
+                List<StockInfo> taskInfoList = stockInfoDao.selectList (new StockInfo ());
+                if (taskInfoList == null || taskInfoList.size () == 0) {
+                    return;
+                }
                 for (StockInfo stockInfo : taskInfoList) {
                     commitCatchTask (entry.getKey (), stockInfo);
                 }
@@ -212,4 +170,24 @@ public class TaskGenerateService implements ApplicationContextAware {
         return catcherMap;
     }
 
+    /**
+     * 定时生成任务
+     */
+    class ScheduleGenerateTask extends ScheduleTask {
+
+        @Override
+        public boolean isExecNow () {
+            return false;
+        }
+
+        @Override
+        public long cycleInterval () {
+            return DefaultCycleInterval;
+        }
+
+        @Override
+        public void run () {
+            commitCatchTaskAll ();
+        }
+    }
 }

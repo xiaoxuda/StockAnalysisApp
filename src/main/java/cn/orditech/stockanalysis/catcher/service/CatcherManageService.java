@@ -3,9 +3,8 @@
  */
 package cn.orditech.stockanalysis.catcher.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import cn.orditech.schedule.ScheduleTask;
+import cn.orditech.schedule.ScheduleTaskService;
 import cn.orditech.stockanalysis.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.slf4j.Logger;
@@ -14,6 +13,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 爬虫管理器
@@ -24,13 +27,15 @@ public class CatcherManageService implements ApplicationContextAware {
 
     public final Logger LOGGER = LoggerFactory.getLogger (CatcherManageService.class);
 
-    //爬虫检测时间间隔
-    private Long checkTimeGap = 10 * 1000L;
+    @Autowired
+    private TaskQueueService taskQueueService;
+
+    //爬虫检测间隔1个定时任务周期
+    private Integer interval = 1;
 
     private Map<TaskTypeEnum, BaseCatcher> catcherMap = new HashMap<TaskTypeEnum, BaseCatcher> ();
 
-    @Autowired
-    private TaskQueueService taskQueueService;
+    private static CatcherCheckTask catcherCheckTask;
 
     /**
      * 自动注册已设置的爬虫
@@ -46,39 +51,11 @@ public class CatcherManageService implements ApplicationContextAware {
         }
     }
 
-    /**
-     * 启动已注册的爬虫
-     *
-     * @author kimi
-     */
-    public void startCatcher () {
-        for (TaskTypeEnum type : catcherMap.keySet ()) {
-            BaseCatcher catcher = catcherMap.get (type);
-            if (!catcher.isRunning ()) {
-                catcher.start ();
-            }
-        }
-    }
-
-    /**
-     * 爬虫监控,按任务类型读取任务队列，唤醒/重启对应的爬虫
-     */
-    public void startCatcherMonitor () {
-        Thread thread = new Thread ("catcherMonitor") {
-            @Override
-            public void run () {
-                while (true) {
-                    catcherStateCheck ();
-                    try {
-                        Thread.sleep (checkTimeGap);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        LOGGER.error ("catcherMonitor,异常信息{}", e.getMessage ());
-                    }
-                }
-            }
-        };
-        thread.start ();
+    @PostConstruct
+    public void init () {
+        //提交定时任务
+        catcherCheckTask = new CatcherCheckTask ();
+        ScheduleTaskService.commitTask (catcherCheckTask);
     }
 
     /**
@@ -103,4 +80,22 @@ public class CatcherManageService implements ApplicationContextAware {
         }
     }
 
+    //爬虫监控定时任务
+    class CatcherCheckTask extends ScheduleTask {
+
+        @Override
+        public boolean isExecNow () {
+            return false;
+        }
+
+        @Override
+        public long cycleInterval () {
+            return interval;
+        }
+
+        @Override
+        public void run () {
+            catcherStateCheck ();
+        }
+    }
 }
