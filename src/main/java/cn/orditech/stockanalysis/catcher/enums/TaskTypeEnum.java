@@ -65,7 +65,7 @@ public enum TaskTypeEnum {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天晚上十点开始工作
-            return calendar.get (Calendar.HOUR_OF_DAY) >= 23;
+            return calendar.get (Calendar.HOUR_OF_DAY) >= 22;
         }
     }),
 
