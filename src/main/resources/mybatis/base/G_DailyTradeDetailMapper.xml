@@ -15,7 +15,8 @@
         	end_price as endPrice,
         	trade_volume as tradeVolume,
         	trade_amt as tradeAmt,
-        	market_value as marketValue
+        	market_value as marketValue,
+        	sc as sc
 	</sql>
 
     <insert id="insert" parameterType="cn.orditech.stockanalysis.entity.DailyTradeDetail">
@@ -29,7 +30,8 @@
         	end_price ,
         	trade_volume ,
         	trade_amt,
-        	market_value
+        	market_value,
+        	sc
         ) VALUES (
         	#{code} ,
         	#{date} ,
@@ -40,7 +42,8 @@
         	#{endPrice} ,
         	#{tradeVolume} ,
         	#{tradeAmt},
-        	#{marketValue}
+        	#{marketValue},
+        	#{sc}
         )
     </insert>
 
@@ -61,7 +64,8 @@
 	        end_price = #{endPrice} ,
 	        trade_volume = #{tradeVolume} ,
 	        trade_amt = #{tradeAmt},
-	        market_value = #{marketValue}
+	        market_value = #{marketValue},
+	        sc = #{sc}
         WHERE
 	        code = #{code}  And 
 	        date = #{date} 
@@ -80,6 +84,7 @@
         <if test="tradeVolume!=null">,trade_volume = #{tradeVolume}</if>
         <if test="tradeAmt!=null">,trade_amt = #{tradeAmt}</if>
         <if test="marketValue!=null">,market_value = #{marketValue}</if>
+        <if test="sc!=null">,sc = #{sc}</if>
         WHERE
         code = #{code} And
         date = #{date}
@@ -109,6 +114,7 @@
         <if test="tradeVolume!=null"> AND trade_volume = #{tradeVolume}</if>
         <if test="tradeAmt!=null"> AND trade_amt = #{tradeAmt}</if>
         <if test="marketValue!=null"> AND market_value = #{marketValue}</if>
+        <if test="sc!=null">AND sc = #{sc}</if>
     </select>
 </mapper>
 

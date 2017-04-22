@@ -106,13 +106,6 @@ public class HistoryTradeDetailCatcher extends BaseCatcher {
         int year = calendar.get (Calendar.YEAR);
         int quarter = (int) Math.ceil ((calendar.get (Calendar.MONTH) + 1) / 3.0);
 
-        //获取上一个季度
-        --quarter;
-        //上年第四季度
-        if (quarter == 0) {
-            year -= 1;
-            quarter = 4;
-        }
         CatchTask task = new CatchTask ();
         task.setType (this.getTaskType ().getCode ());
         task.setUrl (

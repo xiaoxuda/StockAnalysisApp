@@ -63,20 +63,7 @@ public class CatcherManageService implements ApplicationContextAware {
      */
     public void catcherStateCheck () {
         for (TaskTypeEnum type : taskQueueService.getTypeSet ()) {
-            startCatcher (type);
-        }
-    }
-
-    /**
-     * 启动已注册的选定key的爬虫
-     *
-     * @author kimi
-     */
-    public void startCatcher (TaskTypeEnum type) {
-        BaseCatcher catcher = catcherMap.get (type);
-        if (null != catcher && !catcher.isRunning ()) {
-            LOGGER.info ("{}:爬虫重新启动", type);
-            catcher.start ();
+            catcherMap.get (type).startCatcher ();
         }
     }
 

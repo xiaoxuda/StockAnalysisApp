@@ -56,7 +56,7 @@ public class MarketValueCalculateTask extends ScheduleTask {
                         && dailyTradeDetail.getEndPrice ()!=null ?
                         stockInfo.getSc () * dailyTradeDetail.getEndPrice () : 0;
                 dailyTradeDetailDao.udpateMarketValue (dailyTradeDetail.getCode (),
-                        dailyTradeDetail.getDate (),marketValue);
+                        dailyTradeDetail.getDate (),marketValue,stockInfo.getSc ());
             }
         }
     }

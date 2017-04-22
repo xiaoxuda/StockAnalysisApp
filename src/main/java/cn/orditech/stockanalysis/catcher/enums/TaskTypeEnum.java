@@ -59,13 +59,24 @@ public enum TaskTypeEnum {
     }),
 
     /**
-     * 获取股票历史交易信息
+     * 获取股票本季度历史交易信息
      **/
-    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "股票历史交易信息", CycleEnum.HOUR, new CycleRule () {
+    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "股票历史交易信息", CycleEnum.DAY, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天晚上十点开始工作
-            return calendar.get (Calendar.HOUR_OF_DAY) == 22;
+            return calendar.get (Calendar.HOUR_OF_DAY) >= 23;
+        }
+    }),
+
+    /**
+     * 获取股票上季度历史交易记录
+     */
+    SINAJS_LAST_QUATER_TRADE_DETAIL ("sinajs_history_trade_detail", "股票历史交易信息", CycleEnum.DAY, new CycleRule () {
+        public boolean decide () {
+            Calendar calendar = Calendar.getInstance ();
+            //每天晚上十点开始工作
+            return calendar.get (Calendar.HOUR_OF_DAY) >= 23;
         }
     });
 

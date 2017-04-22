@@ -37,11 +37,12 @@ public class DailyTradeDetailDao extends BaseDao<DailyTradeDetail, DailyTradeDet
      * @param marketValue
      * @return
      */
-    public int udpateMarketValue(String code,String date,double marketValue){
+    public int udpateMarketValue(String code,String date,double marketValue,Long sc){
         Map<String, Object> parMap = new HashMap<String, Object> ();
         parMap.put ("code", code);
         parMap.put("date",date);
         parMap.put ("marketValue", marketValue);
+        parMap.put("sc",sc);
         return this.getSqlSession ().update (this.getNameSpace () + ".udpateMarketValue", parMap);
     }
 }

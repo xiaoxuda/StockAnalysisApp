@@ -60,6 +60,15 @@ public class TaskQueueService {
     }
 
     /**
+     * 重置任务
+     * @param task
+     */
+    public void paybackTask(CatchTask task){
+        TaskTypeEnum type = TaskTypeEnum.getByCode (task.getType ());
+        commitTask(type,task);
+    }
+
+    /**
      * 根据任务类型读取一条任务
      *
      * @param type

@@ -18,7 +18,7 @@
     
     <update id="udpateMarketValue" parameterType="java.util.HashMap">
         UPDATE `daily_trade_detail`
-        SET market_value = #{marketValue}
+        SET market_value = #{marketValue}<if test="sc!=null">,sc = #{sc}</if>
         WHERE `code` = #{code} AND `date` = #{date}
     </update>
 </mapper>
