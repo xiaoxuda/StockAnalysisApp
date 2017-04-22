@@ -12,7 +12,7 @@ public enum TaskTypeEnum {
     /**
      * 抓取财务报表
      **/
-    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.HOUR, new CycleRule () {
+    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.DAY, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上5点工作
@@ -23,7 +23,7 @@ public enum TaskTypeEnum {
     /**
      * 抓取上市公司列表
      **/
-    JUCAONET_COMPANY_LIST ("jucaonet_company_list", "股票列表", CycleEnum.HOUR, new CycleRule () {
+    JUCAONET_COMPANY_LIST ("jucaonet_company_list", "股票列表", CycleEnum.DAY, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上2点工作
@@ -34,7 +34,7 @@ public enum TaskTypeEnum {
     /**
      * 获取公司股本数量
      **/
-    JUCAONET_COMPANY_SHARECAPITAL ("jucaonet_company_sharecapital", "股本", CycleEnum.HOUR, new CycleRule () {
+    JUCAONET_COMPANY_SHARECAPITAL ("jucaonet_company_sharecapital", "股本", CycleEnum.DAY, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天早上4点工作
@@ -65,7 +65,7 @@ public enum TaskTypeEnum {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天晚上十点开始工作
-            return calendar.get (Calendar.HOUR_OF_DAY) >= 22;
+            return calendar.get (Calendar.HOUR_OF_DAY) >= 21;
         }
     }),
 
@@ -76,7 +76,7 @@ public enum TaskTypeEnum {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //每天晚上十点开始工作
-            return calendar.get (Calendar.HOUR_OF_DAY) >= 23;
+            return calendar.get (Calendar.HOUR_OF_DAY) >= 22;
         }
     });
 
@@ -156,7 +156,7 @@ public enum TaskTypeEnum {
      * @param lastTimePoint
      * @return
      */
-    public boolean isInNextCycle (Date lastTimePoint) {
+    public boolean isInNextCycle (Long lastTimePoint) {
         // 根据决策规则决策
         if (this.cycleRule != null && !this.cycleRule.decide ()) {
             return false;
@@ -167,6 +167,6 @@ public enum TaskTypeEnum {
             return true;
         }
 
-        return (System.currentTimeMillis () - lastTimePoint.getTime ()) >= this.getCycle ().getMicromillions ();
+        return (System.currentTimeMillis () - lastTimePoint) >= this.getCycle ().getMicromillions ();
     }
 }

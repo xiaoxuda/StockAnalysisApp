@@ -149,7 +149,7 @@ public abstract class BaseCatcher {
 
         @Override
         public boolean isExecNow () {
-            return true;
+            return false;
         }
 
         @Override
@@ -168,13 +168,13 @@ public abstract class BaseCatcher {
                 } else {
                     //当前任务数量大于处理核心的2倍停止添加任务，将当前任务放回队列的顶部
                     if (executor.getQueue ().size () >= executor.getMaximumPoolSize ()*2) {
+                        LOGGER.info ("爬虫任务队列已满,taskSize={},maxPoolSize={},activePoolSize={}",
+                                executor.getQueue ().size (),
+                                executor.getMaximumPoolSize (),
+                                executor.getActiveCount ());
                         taskQueueService.paybackTask (task);
                         break;
                     }
-                    LOGGER.info ("爬虫任务队列已满,taskSize={},maxPoolSize={},activePoolSize={}",
-                            executor.getQueue ().size (),
-                            executor.getMaximumPoolSize (),
-                            executor.getActiveCount ());
                     //提交任务
                     executor.submit (new CatcherRunable (task));
                 }

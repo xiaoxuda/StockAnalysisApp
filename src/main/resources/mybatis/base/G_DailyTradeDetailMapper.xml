@@ -114,7 +114,7 @@
         <if test="tradeVolume!=null"> AND trade_volume = #{tradeVolume}</if>
         <if test="tradeAmt!=null"> AND trade_amt = #{tradeAmt}</if>
         <if test="marketValue!=null"> AND market_value = #{marketValue}</if>
-        <if test="sc!=null">AND sc = #{sc}</if>
+        <if test="sc!=null"> AND sc = #{sc}</if>
     </select>
 </mapper>
 

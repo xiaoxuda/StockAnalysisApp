@@ -43,7 +43,7 @@ public class TaskGenerateService implements ApplicationContextAware {
     /**
      * 上次调度时间
      **/
-    private Map<TaskTypeEnum, Date> scheduleMap = new HashMap<TaskTypeEnum, Date> ();
+    private Map<TaskTypeEnum, Long> scheduleMap = new HashMap<TaskTypeEnum, Long> ();
 
     /**
      * 注册爬虫
@@ -159,7 +159,7 @@ public class TaskGenerateService implements ApplicationContextAware {
             return false;
         }
         // 更新调度时间
-        scheduleMap.put (typeEnum, new Date ());
+        scheduleMap.put (typeEnum, System.currentTimeMillis ());
         return true;
     }
 
