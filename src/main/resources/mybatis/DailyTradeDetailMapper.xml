@@ -104,17 +104,36 @@
         <include refid="columnMap"></include>
         FROM `daily_trade_detail`
         WHERE 1=1
-        <if test="code!=null"> AND code = #{code}</if>
-        <if test="date!=null"> AND date = #{date}</if>
-        <if test="lastEndPrice!=null"> AND last_end_price = #{lastEndPrice}</if>
-        <if test="startPrice!=null"> AND start_price = #{startPrice}</if>
-        <if test="maxPrice!=null"> AND max_price = #{maxPrice}</if>
-        <if test="minPrice!=null"> AND min_price = #{minPrice}</if>
-        <if test="endPrice!=null"> AND end_price = #{endPrice}</if>
-        <if test="tradeVolume!=null"> AND trade_volume = #{tradeVolume}</if>
-        <if test="tradeAmt!=null"> AND trade_amt = #{tradeAmt}</if>
-        <if test="marketValue!=null"> AND market_value = #{marketValue}</if>
-        <if test="sc!=null"> AND sc = #{sc}</if>
+        <if test="code!=null">AND code = #{code}</if>
+        <if test="date!=null">AND date = #{date}</if>
+        <if test="lastEndPrice!=null">AND last_end_price = #{lastEndPrice}</if>
+        <if test="startPrice!=null">AND start_price = #{startPrice}</if>
+        <if test="maxPrice!=null">AND max_price = #{maxPrice}</if>
+        <if test="minPrice!=null">AND min_price = #{minPrice}</if>
+        <if test="endPrice!=null">AND end_price = #{endPrice}</if>
+        <if test="tradeVolume!=null">AND trade_volume = #{tradeVolume}</if>
+        <if test="tradeAmt!=null">AND trade_amt = #{tradeAmt}</if>
+        <if test="marketValue!=null">AND market_value = #{marketValue}</if>
+        <if test="sc!=null">AND sc = #{sc}</if>
     </select>
+
+    <select id="selectListByDateDesc" resultType="cn.orditech.stockanalysis.entity.DailyTradeDetail">
+        SELECT
+        <include refid="columnMap"></include>
+        FROM `daily_trade_detail`
+        WHERE code = #{code}
+        ORDER BY `date` DESC
+        <choose>
+            <when test="dayCount!=null">LIMIT #{dayCount}</when>
+            <otherwise>LIMIT 60</otherwise><!-- 默认选取近60天的交易记录 -->
+        </choose>
+    </select>
+
+    <update id="udpateMarketValue" parameterType="java.util.HashMap">
+        UPDATE `daily_trade_detail`
+        SET market_value = #{marketValue}
+        <if test="sc!=null">,sc = #{sc}</if>
+        WHERE `code` = #{code} AND `date` = #{date}
+    </update>
 </mapper>
 

@@ -24,6 +24,5 @@
     <context:component-scan base-package="cn.orditech.stockanalysis.*"></context:component-scan>
 
     <import resource="classpath:datasource-config.xml"></import>
-    <import resource="classpath:catcher-beans.xml"></import>
 
 </beans>

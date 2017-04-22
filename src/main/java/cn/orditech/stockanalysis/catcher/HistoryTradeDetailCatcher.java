@@ -11,6 +11,7 @@ import java.util.List;
 
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
@@ -22,6 +23,7 @@ import cn.orditech.stockanalysis.service.StockDataService;
 /**
  * @author kimi
  */
+@Component
 public class HistoryTradeDetailCatcher extends BaseCatcher {
 
     @Autowired

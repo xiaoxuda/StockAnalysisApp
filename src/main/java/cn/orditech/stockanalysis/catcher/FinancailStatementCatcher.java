@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.FinancailStatement;
 import cn.orditech.stockanalysis.entity.StockInfo;
+import org.springframework.stereotype.Component;
 
 /*
  * @author kimi
  * @see 抓取上市公司财务报表
  */
+@Component
 public class FinancailStatementCatcher extends BaseCatcher {
 
     @Autowired

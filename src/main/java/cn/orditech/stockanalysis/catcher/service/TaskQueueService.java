@@ -4,6 +4,7 @@ import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  *
  * @author kimi
  */
+@Service
 public class TaskQueueService {
     private final Logger LOGGER = LoggerFactory.getLogger (TaskQueueService.class);
 

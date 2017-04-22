@@ -10,12 +10,14 @@ import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 /**
  * @author kimi
  */
+@Component
 public class StockRealtimeTradeCatcher extends BaseCatcher {
 
     @Autowired

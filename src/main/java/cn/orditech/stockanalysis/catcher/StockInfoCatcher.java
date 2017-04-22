@@ -13,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
+import org.springframework.stereotype.Component;
 
 /*
  * @author kimi
  * @see 抓取股票代码与名称、股票类型
  */
+@Component
 public class StockInfoCatcher extends BaseCatcher {
 
     @Autowired

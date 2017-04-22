@@ -9,6 +9,7 @@ import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
@@ -17,6 +18,7 @@ import java.util.*;
 /**
  * @author kimi
  */
+@Component
 public class LastQuaterTradeDetailCatcher extends HistoryTradeDetailCatcher {
 
     /* (non-Javadoc)
