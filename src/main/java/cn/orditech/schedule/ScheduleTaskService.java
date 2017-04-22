@@ -3,8 +3,9 @@ package cn.orditech.schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.concurrent.Executors;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +36,7 @@ public class ScheduleTaskService {
     /**
      * 任务执行器
      */
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (1,4,60L,TimeUnit.SECONDS,
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (1, 4, 60L, TimeUnit.SECONDS,
             new LinkedBlockingQueue<Runnable> ());
 
 
@@ -69,27 +70,27 @@ public class ScheduleTaskService {
                 return;
             }
             //任务提取与插入互斥
-            synchronized (taskPool) {
+            synchronized (ScheduleTaskService.class) {
                 long currentTime = System.currentTimeMillis ();
                 //用当前时间查找到对应的插入位置即为符合当前调度时间的任务数量
                 int targetTaskSize = getInsertIndex (currentTime, 0, taskPool.size () - 1);
-                int num = 0;
-                for (ScheduleTaskEntity entity : taskPool) {
-                    if (num >= targetTaskSize) {
-                        return;
+                List<ScheduleTaskEntity> executeList = new ArrayList<ScheduleTaskEntity> ();
+                for (int num = 0; num < targetTaskSize; ++num) {
+                    ScheduleTaskEntity entity = taskPool.remove (0);
+                    if (entity.getTask ().isCanceled ()) {
+                        continue;
+                    } else {
+                        executeList.add (entity);
                     }
                     if (entity.getTask ().isShutDown ()) {
-                        ++num;
-                        continue;
-                    }
-                    if (entity.getTask ().isCanceled ()) {
-                        --targetTaskSize;
-                        taskPool.remove (num);
                         continue;
                     }
                     executor.submit (entity.getTask ());
                     entity.setNextExecTime (nextExecTime (entity.getTask (), currentTime));
-                    ++num;
+                }
+                //保证任务池有序
+                for (ScheduleTaskEntity entity : executeList) {
+                    putToTaskPool (entity);
                 }
                 lastScheduleTime = currentTime;
             }
@@ -109,12 +110,14 @@ public class ScheduleTaskService {
      * @param task
      */
     public static void commitTask (ScheduleTask task) {
-        ScheduleTaskEntity taskEntity = new ScheduleTaskEntity (task);
-        taskEntity.setNextExecTime (nextExecTime (task, System.currentTimeMillis ()));
-        if (task.isExecNow ()) {
-            executor.execute (task);
+        synchronized (ScheduleTaskService.class) {
+            ScheduleTaskEntity taskEntity = new ScheduleTaskEntity (task);
+            taskEntity.setNextExecTime (nextExecTime (task, System.currentTimeMillis ()));
+            if (task.isExecNow ()) {
+                executor.execute (task);
+            }
+            putToTaskPool (taskEntity);
         }
-        putToTaskPool (taskEntity);
     }
 
     /**
@@ -123,10 +126,10 @@ public class ScheduleTaskService {
      * @param taskEntity
      */
     private static void putToTaskPool (ScheduleTaskEntity taskEntity) {
-        synchronized (taskPool) {
-            int index = getInsertIndex (taskEntity.getNextExecTime (), 0, taskPool.size () - 1);
-            taskPool.add (index, taskEntity);
-        }
+
+        int index = getInsertIndex (taskEntity.getNextExecTime (), 0, taskPool.size () - 1);
+        taskPool.add (index, taskEntity);
+
     }
 
     /**

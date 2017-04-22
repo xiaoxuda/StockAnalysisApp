@@ -171,7 +171,7 @@ public abstract class BaseCatcher {
                         LOGGER.info ("爬虫任务队列已满,taskSize={},maxPoolSize={},activePoolSize={}",
                                 executor.getQueue ().size (),
                                 executor.getMaximumPoolSize (),
-                                executor.getActiveCount ());
+                                executor.getPoolSize ());
                         taskQueueService.paybackTask (task);
                         break;
                     }
