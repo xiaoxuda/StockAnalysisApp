@@ -59,6 +59,11 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
      */
     private java.lang.Double marketValue;
 
+    /**
+     * 当前股本
+     */
+    private Long sc;
+
     public DailyTradeDetail () {
     }
 
@@ -148,6 +153,14 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
 
     public void setMarketValue (Double marketValue) {
         this.marketValue = marketValue;
+    }
+
+    public Long getSc () {
+        return sc;
+    }
+
+    public void setSc (Long sc) {
+        this.sc = sc;
     }
 }
 
