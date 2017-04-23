@@ -40,10 +40,11 @@ public abstract class BaseCatcher {
     private TaskQueueService taskQueueService;
 
     /**
-     * 线程池，子类只能通过覆盖入口方法修改部分属性，核心默认6个线程
+     * 线程池，子类只能通过覆盖入口方法修改部分属性，核心默认4个守护线程
      **/
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (2, 20, 5,
-            TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable> ());
+    private static final int TASK_CAPACITY = 200;
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (4, 40, 1,
+            TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable> (TASK_CAPACITY));
 
     private CatcherSchedulerTask catcherSchedulerTask;
 
@@ -140,6 +141,11 @@ public abstract class BaseCatcher {
         public void run () {
             catchAction (this.task, againTime);
         }
+
+
+        public CatchTask getTask () {
+            return task;
+        }
     }
 
     /**
@@ -166,12 +172,17 @@ public abstract class BaseCatcher {
                     catcherSchedulerTask.setCanceled (true);
                     break;
                 } else {
-                    //当前任务数量大于处理核心的2倍停止添加任务，将当前任务放回队列的顶部
-                    if (executor.getQueue ().size () >= executor.getMaximumPoolSize ()*2) {
-                        LOGGER.info ("爬虫任务队列已满,taskSize={},maxPoolSize={},activePoolSize={}",
+                    //当前处理器核心达到最大任务数量且由任务等待执行则停止添加任务，将当前任务放回队列的顶部
+                    if (executor.getQueue ().size () > TASK_CAPACITY-2 && executor.getPoolSize () >= executor.getMaximumPoolSize ()-2) {
+                        LOGGER.info ("爬虫任务队列已满" +
+                                "\n     taskSize={}" +
+                                "\n     maxPoolSize={}" +
+                                "\n     poolSize={}" +
+                                "\n     completedTaskCount={}",
                                 executor.getQueue ().size (),
                                 executor.getMaximumPoolSize (),
-                                executor.getPoolSize ());
+                                executor.getPoolSize (),
+                                executor.getCompletedTaskCount ());
                         taskQueueService.paybackTask (task);
                         break;
                     }
