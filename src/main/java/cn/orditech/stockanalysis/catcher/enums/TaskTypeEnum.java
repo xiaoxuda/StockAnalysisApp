@@ -12,10 +12,15 @@ public enum TaskTypeEnum {
     /**
      * 抓取财务报表
      **/
-    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.DAY, new CycleRule () {
+    EASTMONEYNET_STATEMENT ("eastmoney_statement", "财务报表", CycleEnum.WEEK, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
-            //每天晚上10点工作
+            int dayOfWeek = calendar.get (Calendar.DAY_OF_WEEK);
+            //周日晚上搞搞
+            if (dayOfWeek != Calendar.SUNDAY) {
+                return false;
+            }
+            //晚上10点工作
             return calendar.get (Calendar.HOUR_OF_DAY) == 22;
         }
     }),
@@ -61,7 +66,7 @@ public enum TaskTypeEnum {
     /**
      * 获取股票本季度历史交易信息
      **/
-    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "本季度历史交易信息", CycleEnum.DAY, new CycleRule () {
+    SINAJS_HISTORY_TRADE_DETAIL ("sinajs_history_trade_detail", "本季度历史交易信息", CycleEnum.MONTH, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //周末搞搞就行！！！
@@ -76,7 +81,7 @@ public enum TaskTypeEnum {
     /**
      * 获取股票上季度历史交易记录
      */
-    SINAJS_LAST_QUATER_TRADE_DETAIL ("sinajs_last_quater_trade_detail", "前一季度历史交易信息", CycleEnum.DAY, new CycleRule () {
+    SINAJS_LAST_QUATER_TRADE_DETAIL ("sinajs_last_quater_trade_detail", "前一季度历史交易信息", CycleEnum.MONTH, new CycleRule () {
         public boolean decide () {
             Calendar calendar = Calendar.getInstance ();
             //周末搞搞就行！！！
