@@ -38,24 +38,23 @@ public class StockDataShowService {
      * 查询选定股票的财务信息，按展示要求做运算处理并以合适的方式返回
      *
      * @param code
-     * @param quarterCount
      * @return
      */
-    public Map<String, Object> generateBussinessCurveData (String code, Integer quarterCount) {
+    public Map<String, Object> generateBussinessCurveData (String code) {
         if (StringUtils.isBlank (code)) {
             return null;
         }
 
         // 财务数据
-        List<FinancailStatement> list = financailStatementDao.selectListByYearDesc (code, quarterCount);
+        List<FinancailStatement> list = financailStatementDao.selectListByYearDesc (code);
         Map<String, BusinessCurveResult> toiMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_TOI);
         Map<String, BusinessCurveResult> mpMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_MP);
         Map<String, BusinessCurveResult> sgprMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_SGPR);
         Map<String, BusinessCurveResult> drarMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_DRAR);
         Map<String, BusinessCurveResult> seMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_SE);
 
-        // 近六个月交易信息（大概120个交易日）
-        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 360);
+        // 近六个月交易信息（大概360个交易日）
+        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 200);
         if (tradeList != null && !tradeList.isEmpty ()) {
             Collections.sort (tradeList, new Comparator<DailyTradeDetail> () {
                 @Override

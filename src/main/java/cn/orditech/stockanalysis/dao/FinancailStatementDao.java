@@ -1,11 +1,15 @@
 
 package cn.orditech.stockanalysis.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.orditech.stockanalysis.entity.FinancailStatement;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,13 +24,15 @@ public class FinancailStatementDao extends BaseDao<FinancailStatement, Financail
      * 按年份大小倒叙查询指定数量的数据
      *
      * @param code
-     * @param quarterCount 要查询的季度数量
      * @return 数据列表按年份大小倒叙排列
      */
-    public List<FinancailStatement> selectListByYearDesc (String code, Integer quarterCount) {
+    public List<FinancailStatement> selectListByYearDesc (String code) {
         Map<String, Object> parMap = new HashMap<String, Object> ();
         parMap.put ("code", code);
-        parMap.put ("quarterCount", quarterCount);
+        Calendar calendar = Calendar.getInstance ();
+        calendar.add(Calendar.YEAR, -4);
+        calendar.set (Calendar.MONTH, 1);
+        parMap.put("startDate", new SimpleDateFormat ("yyyy-MM-dd").format (calendar.getTime()));
         return this.getSqlSession ().selectList (this.getNameSpace () + ".selectListByQuarterDesc", parMap);
     }
 }

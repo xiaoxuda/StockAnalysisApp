@@ -211,9 +211,8 @@
         SELECT
         <include refid="columnMap"></include>
         FROM `financail_statement`
-        WHERE code=#{code}
+        WHERE code=#{code} AND date > #{startDate}
         ORDER BY `date` DESC
-        <if test="quarterCount!=null">LIMIT #{quarterCount}</if>
     </select>
 </mapper>
 
