@@ -15,25 +15,25 @@
 
     <style type="text/css">
         .chart_container {
-            min-width:1000px;
+            max-width:1000px;
             height: 450px;
             margin: 50px auto;
             display: none;
         }
 
         #search_panel {
-            width: 530px;
+            max-width:530px;
             margin: 250PX auto 50px auto;
         }
 
         #keyword {
-            width: 400px;
+            max-width: 400px;
         }
 
         .suggestion-list {
             list-style: none;
             position: absolute;
-            width: 400px;
+            max-width: 400px;
             background-color: #fff;
             z-index: 9999;
             top: 35px;
@@ -88,9 +88,9 @@
     //调整页面元素宽度，使自适应屏幕
     var pageWidth = document.body.clientWidth;
     $(".chart_container").css("width", pageWidth * 0.8);
-    $(".search_panel").css("width", pageWidth * 0.6);
-    $("#keyword").css("width", pageWidth * 0.6 - 124);
-    $(".suggestion-list").css("width", pageWidth * 0.6 - 124);
+    $(".search_panel").css("width", pageWidth * 0.8);
+    $("#keyword").css("width", pageWidth * 0.8 - 124);
+    $(".suggestion-list").css("width", pageWidth * 0.8 - 124);
     $(".suggestion-list").css("left", 124);
 
     //保存由服务器获取的数据
