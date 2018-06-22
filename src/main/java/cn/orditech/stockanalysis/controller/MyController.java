@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +65,8 @@ public class MyController {
     @RequestMapping(value = "/curvedata")
     @ResponseBody
     public String getCureData (@RequestParam("code") String code) {
-        Map<String, Object> result = stockDataShowService.generateBussinessCurveData (code, 20);
+        Map<String, Object> result = stockDataShowService.generateBussinessCurveData (code,
+                16 + (int)Math.ceil(Calendar.getInstance ().get (Calendar.MONTH)/3.0));
 
         Gson gson = new GsonBuilder ().serializeNulls ().create ();
         return gson.toJson (result);

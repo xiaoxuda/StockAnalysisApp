@@ -15,7 +15,7 @@
 
     <style type="text/css">
         .chart_container {
-            width: 880px;
+            min-width:1000px;
             height: 450px;
             margin: 50px auto;
             display: none;
@@ -71,7 +71,7 @@
 </head>
 <body>
 <div id="search_panel" class="input-group">
-    <div class="input-group" style="width:420px;">
+    <div class="input-group">
         <span class="input-group-addon">股票名称或代码</span>
         <input id="keyword" class="form-control" type="text" placeholder="输入公司名称或交易代码，我们将为您自动搜索" value=""/>
     </div>
@@ -79,12 +79,20 @@
 </div>
 <div id="toi_chart" class="chart_container"></div>
 <div id="mp_chart" class="chart_container"></div>
-<div id="sgpr_chart" class="chart_container" style="width:850px;padding-left:20px;"></div>
-<div id="trade_chart" class="chart_container" style="width:850px;padding-left:20px;"></div>
-<div id="market_value_chart" class="chart_container" style="width:850px;padding-left:20px;"></div>
+<div id="sgpr_chart" class="chart_container"></div>
+<div id="trade_chart" class="chart_container"></div>
+<div id="market_value_chart" class="chart_container"></div>
 
 
 <script type="text/javascript">
+    //调整页面元素宽度，使自适应屏幕
+    var pageWidth = window.screen.availWidth;
+    $(".chart_container").css("width", pageWidth * 0.8);
+    $(".search_panel").css("width", pageWidth * 0.6);
+    $("#keyword").css("width", pageWidth * 0.6 - 124);
+    $(".suggestion-list").css("width", pageWidth * 0.6 - 124);
+    $(".suggestion-list").css("left", 124);
+
     //保存由服务器获取的数据
     var srcData = {};
 
@@ -389,18 +397,18 @@
             //展示推荐股票
             var list = [];
             list.push({name: '贵州茅台', code: '600519'});
-            list.push({name: '云南白药', code: '000538'});
-            list.push({name: '复兴医药', code: '600196'});
             list.push({name: '中国平安', code: '601318'});
-            list.push({name: '双汇发展', code: '000895'});
+            list.push({name: '复兴医药', code: '600196'});
+            list.push({name: '东阿阿胶', code: '000423'});
             list.push({name: '格力电器', code: '000651'});
-            list.push({name: '招商银行', code: '600036'});
-            list.push({name: '华域汽车', code: '600741'});
-            list.push({name: '上汽集团', code: '600104'});
-            list.push({name: '长安汽车', code: '000625'});
-            list.push({name: '伊利股份', code: '600887'});
             list.push({name: '阳光电源', code: '300274'});
+            list.push({name: '天齐锂业', code: '002466'});
+            list.push({name: '隆基股份', code: '601012'});
             list.push({name: '金风科技', code: '002202'});
+            list.push({name: '白云山', code: '600332'});
+            list.push({name: '云南白药', code: '000538'});
+            list.push({name: '平安银行', code: '000001'});
+            list.push({name: '招商银行', code: '600036'});
             showSuggesstStocks(list);
         } else {
             //根据输入获取公司信息

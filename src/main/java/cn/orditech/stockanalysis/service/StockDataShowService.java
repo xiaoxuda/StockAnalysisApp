@@ -55,7 +55,7 @@ public class StockDataShowService {
         Map<String, BusinessCurveResult> seMap = buildCurveData (list, FinancailStatementAttrEnum.ATTR_SE);
 
         // 近六个月交易信息（大概120个交易日）
-        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 120);
+        List<DailyTradeDetail> tradeList = dailyTradeDetailDao.selectListByDateDesc (code, 360);
         if (tradeList != null && !tradeList.isEmpty ()) {
             Collections.sort (tradeList, new Comparator<DailyTradeDetail> () {
                 @Override
