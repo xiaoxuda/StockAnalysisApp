@@ -66,7 +66,7 @@ public class MyController {
     @ResponseBody
     public String getCureData (@RequestParam("code") String code) {
         Map<String, Object> result = stockDataShowService.generateBussinessCurveData (code,
-                16 + (int)Math.ceil(Calendar.getInstance ().get (Calendar.MONTH)/3.0));
+                16 + (int)Math.ceil((Calendar.getInstance ().get (Calendar.MONTH) + 1)/3.0));
 
         Gson gson = new GsonBuilder ().serializeNulls ().create ();
         return gson.toJson (result);

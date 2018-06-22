@@ -86,7 +86,7 @@
 
 <script type="text/javascript">
     //调整页面元素宽度，使自适应屏幕
-    var pageWidth = window.screen.availWidth;
+    var pageWidth = document.body.clientWidth;
     $(".chart_container").css("width", pageWidth * 0.8);
     $(".search_panel").css("width", pageWidth * 0.6);
     $("#keyword").css("width", pageWidth * 0.6 - 124);
