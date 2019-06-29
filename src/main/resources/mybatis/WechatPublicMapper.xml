@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.stockanalysis.dao.WechatPublicDao">
+    <sql id="columnMap">
+            id as id,
+            name as name,
+            description as description,
+            certified_text as certifiedText,
+            account as account,
+            wxid as wxid,
+            tags as tags,
+            type as type,
+            head_image_url as headImageUrl,
+            code_image_url as codeImageUrl,
+            rank_index as rankIndex
+    </sql>
+    <!--base operation start-->
+    <insert id="insert" parameterType="cn.orditech.stockanalysis.entity.WechatPublic" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `wechat_public` (
+            name ,
+            description ,
+            certified_text ,
+            account ,
+            wxid ,
+            tags ,
+            type ,
+            head_image_url ,
+            code_image_url ,
+            rank_index 
+        ) VALUES (
+            #{name} ,
+            #{description} ,
+            #{certifiedText} ,
+            #{account} ,
+            #{wxid} ,
+            #{tags} ,
+            #{type} ,
+            #{headImageUrl} ,
+            #{codeImageUrl} ,
+            #{rankIndex} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `wechat_public`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="cn.orditech.stockanalysis.entity.WechatPublic">
+        UPDATE `wechat_public` 
+        SET
+            name = #{name} ,
+            description = #{description} ,
+            certified_text = #{certifiedText} ,
+            account = #{account} ,
+            wxid = #{wxid} ,
+            tags = #{tags} ,
+            type = #{type} ,
+            head_image_url = #{headImageUrl} ,
+            code_image_url = #{codeImageUrl} ,
+            rank_index = #{rankIndex} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.stockanalysis.entity.WechatPublic">
+        UPDATE `wechat_public`
+        SET
+            id = #{id} 
+            <if test="name!=null" >,name = #{name}</if>
+            <if test="description!=null" >,description = #{description}</if>
+            <if test="certifiedText!=null" >,certified_text = #{certifiedText}</if>
+            <if test="account!=null" >,account = #{account}</if>
+            <if test="wxid!=null" >,wxid = #{wxid}</if>
+            <if test="tags!=null" >,tags = #{tags}</if>
+            <if test="type!=null" >,type = #{type}</if>
+            <if test="headImageUrl!=null" >,head_image_url = #{headImageUrl}</if>
+            <if test="codeImageUrl!=null" >,code_image_url = #{codeImageUrl}</if>
+            <if test="rankIndex!=null" >,rank_index = #{rankIndex}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectByName" resultType="cn.orditech.stockanalysis.entity.WechatPublic">
+        SELECT <include refid="columnMap"></include>
+        FROM `wechat_public`
+        WHERE 
+            name = #{name}
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.stockanalysis.entity.WechatPublic">
+        SELECT <include refid="columnMap"></include>
+        FROM `wechat_public`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="name!=null" > AND name = #{name}</if>
+            <if test="description!=null" > AND description = #{description}</if>
+            <if test="certifiedText!=null" > AND certified_text = #{certifiedText}</if>
+            <if test="account!=null" > AND account = #{account}</if>
+            <if test="wxid!=null" > AND wxid = #{wxid}</if>
+            <if test="tags!=null" > AND tags = #{tags}</if>
+            <if test="type!=null" > AND type = #{type}</if>
+            <if test="headImageUrl!=null" > AND head_image_url = #{headImageUrl}</if>
+            <if test="codeImageUrl!=null" > AND code_image_url = #{codeImageUrl}</if>
+            <if test="rankIndex!=null" > AND rank_index = #{rankIndex}</if>
+    </select>
+    <!--base operation end-->
+
+    <!--customize operation start-->
+</mapper>
+
