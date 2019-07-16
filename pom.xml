@@ -224,4 +224,21 @@
 
   </dependencies>
 
+    <repositories>
+        <repository>
+            <!-- 直接添加一个 repository 即可 -->
+            <id>repo1</id>
+            <name>org.maven.repo1</name>
+            <layout>default</layout>
+            <url>https://repo1.maven.org/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
 </project>
