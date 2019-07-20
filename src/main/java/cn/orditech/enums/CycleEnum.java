@@ -19,12 +19,12 @@ public enum CycleEnum {
 
     private String code;
     private String desc;
-    private long micromillions;
+    private long microseconds;
 
-    CycleEnum (String code, String desc, long micromillions) {
+    CycleEnum (String code, String desc, long microseconds) {
         this.code = code;
         this.desc = desc;
-        this.micromillions = micromillions;
+        this.microseconds = microseconds;
     }
 
     /**
@@ -42,10 +42,10 @@ public enum CycleEnum {
     }
 
     /**
-     * @return the micromillions
+     * @return the microseconds
      */
-    public long getMicromillions () {
-        return micromillions;
+    public long getMicroseconds () {
+        return microseconds;
     }
 
     /**

@@ -43,7 +43,8 @@ public abstract class BaseCatcher {
      * 线程池，子类只能通过覆盖入口方法修改部分属性，核心默认4个守护线程
      **/
     private static final int TASK_CAPACITY = 200;
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (4, 40, 1,
+    private static final int CPU_NUM = Runtime.getRuntime().availableProcessors();
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (CPU_NUM, 40, 1,
             TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable> (TASK_CAPACITY));
 
     private CatcherSchedulerTask catcherSchedulerTask;
@@ -131,10 +132,10 @@ public abstract class BaseCatcher {
      *
      * @author kimi
      */
-    class CatcherRunable implements Runnable {
+    class CatcherRunnable implements Runnable {
         private CatchTask task;
 
-        public CatcherRunable (CatchTask task) {
+        public CatcherRunnable (CatchTask task) {
             this.task = task;
         }
 
@@ -187,7 +188,7 @@ public abstract class BaseCatcher {
                         break;
                     }
                     //提交任务
-                    executor.submit (new CatcherRunable (task));
+                    executor.submit (new CatcherRunnable (task));
                 }
             }
         }

@@ -180,6 +180,6 @@ public enum TaskTypeEnum {
             return true;
         }
 
-        return (System.currentTimeMillis () - lastTimePoint) >= this.getCycle ().getMicromillions ();
+        return (System.currentTimeMillis () - lastTimePoint) >= this.getCycle ().getMicroseconds ();
     }
 }
