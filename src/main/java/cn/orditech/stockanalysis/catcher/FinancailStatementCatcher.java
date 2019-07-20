@@ -226,7 +226,7 @@ public class FinancailStatementCatcher extends BaseCatcher {
             financailStatement.setRoe (extractData (aList.get (9)[i]));
             financailStatement.setDtar (extractData (aList.get (11)[i]));
             financailStatement.setCps (extractData (aList.get (14)[i]));
-            financailStatement.setSmpr (extractData (aList.get (15)[i]));
+            financailStatement.setSgpr (extractData (aList.get (15)[i]));
 
             stockDataService.fsUpdateOrInsert (financailStatement);
         }
