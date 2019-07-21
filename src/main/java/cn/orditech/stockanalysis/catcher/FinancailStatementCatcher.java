@@ -213,22 +213,27 @@ public class FinancailStatementCatcher extends BaseCatcher {
             aList.add (valueArr);
         }
         int size = aList.get (0).length;
-        for (int i = 1; i < size; i++) {
-            FinancailStatement financailStatement = new FinancailStatement ();
-            financailStatement.setCode ((String) task.getInfoValue ("code"));
-            financailStatement.setDate (aList.get (0)[i]);
-            financailStatement.setPe (extractData (aList.get (1)[i]));
-            financailStatement.setMp (extractData (aList.get (2)[i]));
-            financailStatement.setOpgr (extractData (aList.get (3)[i]));
-            financailStatement.setMpbpc (extractData (aList.get (4)[i]));
-            financailStatement.setToi (extractData (aList.get (6)[i]));
-            financailStatement.setBvps (extractData (aList.get (8)[i]));
-            financailStatement.setRoe (extractData (aList.get (9)[i]));
-            financailStatement.setDtar (extractData (aList.get (11)[i]));
-            financailStatement.setCps (extractData (aList.get (14)[i]));
-            financailStatement.setSgpr (extractData (aList.get (15)[i]));
+        for (int i = 0; i < size; i++) {
+            try {
+                FinancailStatement financailStatement = new FinancailStatement();
+                financailStatement.setCode((String) task.getInfoValue("code"));
+                financailStatement.setDate(aList.get(0)[i]);
+                financailStatement.setPe(extractData(aList.get(1)[i]));
+                financailStatement.setMp(extractData(aList.get(2)[i]));
+                financailStatement.setOpgr(extractData(aList.get(3)[i]));
+                financailStatement.setMpbpc(extractData(aList.get(4)[i]));
+                financailStatement.setToi(extractData(aList.get(6)[i]));
+                financailStatement.setBvps(extractData(aList.get(8)[i]));
+                financailStatement.setRoe(extractData(aList.get(9)[i]));
+                financailStatement.setDtar(extractData(aList.get(11)[i]));
+                financailStatement.setCps(extractData(aList.get(14)[i]));
+                financailStatement.setSgpr(extractData(aList.get(15)[i]));
 
-            stockDataService.fsUpdateOrInsert (financailStatement);
+                stockDataService.fsUpdateOrInsert(financailStatement);
+            }catch (Exception e){
+                LOGGER.warn("createOrUpdateJqka fail code={},date={}", task.getInfoValue("code"), aList.get(0)[i], e);
+                continue;
+            }
         }
         return true;
     }
