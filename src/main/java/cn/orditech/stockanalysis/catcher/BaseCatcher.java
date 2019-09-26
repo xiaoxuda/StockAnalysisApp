@@ -86,8 +86,7 @@ public abstract class BaseCatcher {
 
     public void startCatcher () {
         if(catcherSchedulerTask.isShutDown () || catcherSchedulerTask.isCanceled ()){
-            catcherSchedulerTask.setShutDown (false);
-            catcherSchedulerTask.setCanceled (false);
+            catcherSchedulerTask = new CatcherSchedulerTask();
             ScheduleTaskService.commitTask (catcherSchedulerTask);
             LOGGER.info ("{}:爬虫定时任务重新唤起", getTaskType ());
         }
@@ -139,6 +138,7 @@ public abstract class BaseCatcher {
             this.task = task;
         }
 
+        @Override
         public void run () {
             catchAction (this.task, againTime);
         }

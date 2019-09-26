@@ -9,6 +9,7 @@ import cn.orditech.stockanalysis.dao.StockInfoDao;
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.entity.FinancailStatement;
 import cn.orditech.stockanalysis.entity.StockInfo;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +96,7 @@ public class StockDataService {
         if (null == entity
                 || StringUtils.isBlank (entity.getCode ())
                 || StringUtils.isBlank (entity.getDate ())) {
-            LOGGER.error ("参数错误{}", entity);
+            LOGGER.error ("参数错误{}", JSONObject.toJSONString(entity));
             return 0;
         }
 
@@ -114,7 +115,7 @@ public class StockDataService {
                 try {
                     cnt = financailStatementDao.insert (entity);
                 } catch (Exception e) {
-                    LOGGER.error ("插入股票财务报表信息失败，参数{}\n{}", entity, e.getMessage ());
+                    LOGGER.error ("插入股票财务报表信息失败，参数{},{}", JSONObject.toJSONString(entity), e.getMessage ());
                 }
                 return cnt;
             }
