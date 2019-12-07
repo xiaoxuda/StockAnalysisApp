@@ -1,13 +1,14 @@
-package cn.orditech.stockanalysis.catcher;
+package cn.orditech.stockanalysis.catcher.catcher.impl;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
+import cn.orditech.stockanalysis.catcher.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
-import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/*
+/**
  * @author kimi
  * @see 抓取上市公司股票数量
  */
@@ -23,7 +24,7 @@ public class StockInfoDetailCatcher extends BaseCatcher {
     }
 
     @Override
-    public boolean extract (String src, CatchTask task) {
+    public boolean extractAndPersistence (String src, CatchTask task) {
         if (src == null || src == "" || src.contains ("没有查询到数据！")) {
             LOGGER.error ("公司详细信息抓取失败,TaskType:{} param:{}", task.getType (), task);
             return false;

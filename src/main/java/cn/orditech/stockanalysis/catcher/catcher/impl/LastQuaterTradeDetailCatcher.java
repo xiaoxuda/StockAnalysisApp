@@ -1,17 +1,12 @@
 /**
  *
  */
-package cn.orditech.stockanalysis.catcher;
+package cn.orditech.stockanalysis.catcher.catcher.impl;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
-import cn.orditech.stockanalysis.catcher.service.CatchTask;
-import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.entity.StockInfo;
-import cn.orditech.stockanalysis.service.StockDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import java.util.*;
 

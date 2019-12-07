@@ -1,7 +1,7 @@
 /**
  *
  */
-package cn.orditech.stockanalysis.catcher;
+package cn.orditech.stockanalysis.catcher.catcher.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,13 +9,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
+import cn.orditech.stockanalysis.catcher.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
@@ -30,7 +31,7 @@ public class HistoryTradeDetailCatcher extends BaseCatcher {
     private StockDataService stockDataService;
 
     @Override
-    public boolean extract (String src, CatchTask task) {
+    public boolean extractAndPersistence (String src, CatchTask task) {
         if (src == null || src == "" || src.contains ("该品种暂无此项记录!")) {
             LOGGER.error ("TaskType:{} param:{},抓取每日交易历史记录失败！", task.getType (), task);
             return false;

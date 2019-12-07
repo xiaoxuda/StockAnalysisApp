@@ -1,16 +1,17 @@
 package cn.orditech.stockanalysis.catcher.service;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 任务队列服务
@@ -21,9 +22,16 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class TaskQueueService {
     private final Logger LOGGER = LoggerFactory.getLogger (TaskQueueService.class);
 
-    // FIXME 考虑将任务落入数据库，避免停机引起的任务丢失
-    private final Map<TaskTypeEnum, ArrayBlockingQueue<CatchTask>> queueMap = new HashMap<TaskTypeEnum, ArrayBlockingQueue<CatchTask>> ();
+    /**
+     * FIXME 考虑将任务落入数据库，避免停机引起的任务丢失
+     */
+    private final Map<TaskTypeEnum, LinkedBlockingQueue<CatchTask>> queueMap = new ConcurrentHashMap<>();
 
+    /**
+     * 任务有效性验证
+     * @param task
+     * @return
+     */
     private boolean validTask (CatchTask task) {
         if (null == task) {
             return false;
@@ -47,17 +55,21 @@ public class TaskQueueService {
         assert (validTask (task));
 
         try {
-            ArrayBlockingQueue<CatchTask> taskqueue = queueMap.get (type);
-            if (taskqueue != null) {
-                taskqueue.put (task);
+            LinkedBlockingQueue<CatchTask> taskQueue = queueMap.get (type);
+            if (taskQueue != null) {
+                taskQueue.put (task);
             } else {
-                taskqueue = new ArrayBlockingQueue<CatchTask> (100000, true);
-                taskqueue.put (task);
-                queueMap.put (type, taskqueue);
+                synchronized (queueMap) {
+                    if((taskQueue = queueMap.get(type)) == null) {
+                        taskQueue = new LinkedBlockingQueue<>();
+                        queueMap.put (type, taskQueue);
+                    }
+                }
+                taskQueue.put (task);
             }
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
-            LOGGER.error ("taskGenerate,异常信息{}", e.getMessage ());
+            LOGGER.error ("taskGenerate,异常信息:{}", e.getMessage ());
         }
     }
 
@@ -77,9 +89,9 @@ public class TaskQueueService {
      * @return
      */
     public CatchTask getTask (TaskTypeEnum type) {
-        ArrayBlockingQueue<CatchTask> taskqueue = queueMap.get (type);
-        if (taskqueue != null) {
-            return taskqueue.poll ();
+        LinkedBlockingQueue<CatchTask> taskQueue = queueMap.get (type);
+        if (taskQueue != null) {
+            return taskQueue.poll ();
         } else {
             return null;
         }
@@ -91,7 +103,7 @@ public class TaskQueueService {
      * @return
      */
     public Set<TaskTypeEnum> getTypeSet () {
-        Set<TaskTypeEnum> taskQueue = new HashSet<TaskTypeEnum> ();
+        Set<TaskTypeEnum> taskQueue = new HashSet<> ();
         for (TaskTypeEnum type : queueMap.keySet ()) {
             if (queueMap.get (type).size () > 0) {
                 taskQueue.add (type);

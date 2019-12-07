@@ -1,13 +1,14 @@
 package cn.orditech.stockanalysis.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
-import cn.orditech.stockanalysis.catcher.service.TaskGenerateService;
+import cn.orditech.stockanalysis.catcher.service.CatcherRegisterCenter;
+import cn.orditech.stockanalysis.catcher.service.TaskGenerator;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.query.StockInfoQuery;
 import cn.orditech.stockanalysis.service.StockDataQueryService;
 import cn.orditech.stockanalysis.service.StockDataShowService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/*
+/**
  * @author kimi
  */
 @Controller
@@ -34,7 +33,7 @@ public class MyController {
     @Autowired
     private StockDataShowService stockDataShowService;
     @Autowired
-    private TaskGenerateService taskGenerateService;
+    private TaskGenerator taskGenerator;
     @Value ("${generate.lock.Key}")
     private String generateLockKey;
 
@@ -73,7 +72,7 @@ public class MyController {
 
     @RequestMapping(value = "/generatetask")
     public String generateTask (Model model) {
-        model.addAttribute ("catcherSet", taskGenerateService.getCatcherMap ().keySet ());
+        model.addAttribute ("catcherSet", CatcherRegisterCenter.getRegisterType());
         return "generatetask";
     }
 
@@ -86,7 +85,7 @@ public class MyController {
         if (!this.generateLockKey.equals (generateLockKey)) {
             return "任务锁错误！";
         }
-        taskGenerateService.commitCatchTask (TaskTypeEnum.getByCode (typeEnumCode), false);
+        taskGenerator.commitCatchTask (TaskTypeEnum.getByCode (typeEnumCode), false);
         return null;
     }
 }
