@@ -31,8 +31,7 @@ public class ScheduleTaskService {
     /**
      * 任务池
      */
-    private static final LinkedList<ScheduleTaskEntity> taskPool =
-            new LinkedList<ScheduleTaskEntity> ();
+    private static final LinkedList<ScheduleTaskEntity> taskPool = new LinkedList<> ();
 
 
     /**
