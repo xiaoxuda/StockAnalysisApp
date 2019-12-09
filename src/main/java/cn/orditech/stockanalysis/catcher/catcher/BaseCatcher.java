@@ -171,7 +171,7 @@ public abstract class BaseCatcher implements Catcher {
                 CatchTask task = taskQueueService.getTask (getTaskType ());
                 if (task == null) {
                     interval = interval < maxInterval ? (interval + defaultInterval) : interval;
-                    LOGGER.info ("{}:没有爬取任务,爬虫定时任务延长执行时间, interval:", getTaskType (), interval);
+                    LOGGER.info ("{}:没有爬取任务,爬虫定时任务延长执行时间, interval:{}", getTaskType (), interval);
                     break;
                 } else {
                     //恢复时间间隔
@@ -179,7 +179,7 @@ public abstract class BaseCatcher implements Catcher {
                         interval = defaultInterval;
                     }
                     //当前处理器核心达到最大任务数量且由任务等待执行则停止添加任务，将当前任务放回队列的顶部
-                    if (executor.getQueue ().size () > TASK_CAPACITY && executor.getPoolSize () >= executor.getMaximumPoolSize ()) {
+                    if (executor.getQueue ().size () >= TASK_CAPACITY && executor.getPoolSize () >= executor.getMaximumPoolSize ()) {
                         LOGGER.info ("爬虫任务队列已满" +
                                 "\n     taskSize={}" +
                                 "\n     maxPoolSize={}" +
