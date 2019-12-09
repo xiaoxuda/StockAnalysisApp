@@ -101,16 +101,21 @@ public class StockDataService {
         }
 
         int updateCnt = transactionTemplate.execute (new TransactionCallback<Integer> () {
+            @Override
             public Integer doInTransaction (TransactionStatus arg0) {
+                FinancailStatement old = financailStatementDao.selectOne(entity);
+                if(old != null){
+                    return 0;
+                }
                 int cnt = 0;
-                if (isNullToSave) {
+                /*if (isNullToSave) {
                     cnt = financailStatementDao.update (entity);
                 } else {
                     cnt = financailStatementDao.updateSelective (entity);
                 }
                 if (cnt == 1) {
                     return cnt;
-                }
+                }*/
 
                 try {
                     cnt = financailStatementDao.insert (entity);

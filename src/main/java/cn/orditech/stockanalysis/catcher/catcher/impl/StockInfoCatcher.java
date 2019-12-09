@@ -1,4 +1,4 @@
-package cn.orditech.stockanalysis.catcher;
+package cn.orditech.stockanalysis.catcher.catcher.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,16 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
+import cn.orditech.stockanalysis.catcher.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
 import org.springframework.stereotype.Component;
 
-/*
+/**
  * @author kimi
  * @see 抓取股票代码与名称、股票类型
  */
@@ -51,7 +52,7 @@ public class StockInfoCatcher extends BaseCatcher {
     }
 
     @Override
-    public boolean extract (String src, CatchTask task) {
+    public boolean extractAndPersistence (String src, CatchTask task) {
         if (src == null || src == "") {
             LOGGER.error ("抓取公司列表失败,TaskType:{},param:{}", task.getType (), task);
             return false;

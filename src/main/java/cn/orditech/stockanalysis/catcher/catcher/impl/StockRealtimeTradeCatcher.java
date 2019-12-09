@@ -1,10 +1,11 @@
 /**
  *
  */
-package cn.orditech.stockanalysis.catcher;
+package cn.orditech.stockanalysis.catcher.catcher.impl;
 
+import cn.orditech.stockanalysis.catcher.CatchTask;
+import cn.orditech.stockanalysis.catcher.catcher.BaseCatcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
-import cn.orditech.stockanalysis.catcher.service.CatchTask;
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.service.StockDataService;
@@ -34,7 +35,7 @@ public class StockRealtimeTradeCatcher extends BaseCatcher {
      * @author kimi
      */
     @Override
-    public boolean extract (String src, final CatchTask task) {
+    public boolean extractAndPersistence (String src, final CatchTask task) {
         if (StringUtils.isBlank (src)) {
             LOGGER.error ("{}:{},返回结果为空", task.getType (), task);
             return false;

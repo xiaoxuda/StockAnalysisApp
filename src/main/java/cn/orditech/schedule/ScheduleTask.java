@@ -20,7 +20,7 @@ public abstract class ScheduleTask implements Runnable{
     public abstract boolean isExecNow();
 
     /**
-     * 执行的时间单位间隔，时间单位指定时任务服务的时间单位
+     * 执行的时间单位间隔
      * @return
      */
     public abstract long cycleInterval();
@@ -40,6 +40,9 @@ public abstract class ScheduleTask implements Runnable{
         return isCanceled;
     }
 
+    /**
+     * 任务执行逻辑
+     */
     @Override
     public abstract void run();
 

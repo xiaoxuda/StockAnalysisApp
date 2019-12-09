@@ -5,23 +5,20 @@ package cn.orditech.stockanalysis.catcher.service;
 
 import cn.orditech.schedule.ScheduleTask;
 import cn.orditech.schedule.ScheduleTaskService;
-import cn.orditech.stockanalysis.catcher.BaseCatcher;
+import cn.orditech.stockanalysis.catcher.CatchTask;
+import cn.orditech.stockanalysis.catcher.catcher.Catcher;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import cn.orditech.stockanalysis.dao.StockInfoDao;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 任务生成器，按照不同任务的时间策略定时生成数据抓取任务
@@ -29,8 +26,8 @@ import java.util.Map;
  * @author kimi
  */
 @Service
-public class TaskGenerateService implements ApplicationContextAware {
-    private final Logger LOGGER = LoggerFactory.getLogger (TaskGenerateService.class);
+public class TaskGenerator {
+    private final Logger LOGGER = LoggerFactory.getLogger (TaskGenerator.class);
 
     @Autowired
     private StockInfoDao stockInfoDao;
@@ -45,36 +42,15 @@ public class TaskGenerateService implements ApplicationContextAware {
     /**
      * 上次调度时间
      **/
-    private Map<TaskTypeEnum, Long> scheduleMap = new HashMap<TaskTypeEnum, Long> ();
-
-    /**
-     * 注册爬虫
-     **/
-    private Map<TaskTypeEnum, BaseCatcher> catcherMap = new HashMap<TaskTypeEnum, BaseCatcher> ();
+    private Map<TaskTypeEnum, Long> scheduleMap = new ConcurrentHashMap<>();
 
     private ScheduleGenerateTask scheduleGenerateTask;
 
     @PostConstruct
     public void init () {
-        // FIXME 考虑将调度时间落入数据库，启动时从数据库读取
-
-        //提交定时任务
+        //启动时将自己注册到定时调度器
         scheduleGenerateTask = new ScheduleGenerateTask ();
         ScheduleTaskService.commitTask (scheduleGenerateTask);
-    }
-
-    /**
-     * 自动注册已设置的爬虫
-     */
-    @Override
-    public void setApplicationContext (ApplicationContext applicationContext) throws BeansException {
-        // TODO Auto-generated method stub
-        Map<String, BaseCatcher> beansMap = applicationContext.getBeansOfType (BaseCatcher.class);
-        if (beansMap != null && beansMap.size () > 0) {
-            for (BaseCatcher catcher : beansMap.values ()) {
-                catcherMap.put (catcher.getTaskType (), catcher);
-            }
-        }
     }
 
     /**
@@ -83,9 +59,9 @@ public class TaskGenerateService implements ApplicationContextAware {
      * @param typeEnum
      * @param stockInfo
      */
-    public void commitCatchTask (TaskTypeEnum typeEnum, StockInfo stockInfo) {
+    private void commitCatchTask (TaskTypeEnum typeEnum, StockInfo stockInfo) {
 
-        CatchTask task = catcherMap.get (typeEnum).generateTask (stockInfo);
+        CatchTask task = CatcherRegisterCenter.getByType (typeEnum).generateTask (stockInfo);
 
         taskQueueService.commitTask (typeEnum, task);
     }
@@ -105,6 +81,7 @@ public class TaskGenerateService implements ApplicationContextAware {
         // 生成股票列表任务
         if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (typeEnum)) {
             commitCatchTask (typeEnum, null);
+            refreshCycle (typeEnum);
             return;
         }
 
@@ -130,22 +107,23 @@ public class TaskGenerateService implements ApplicationContextAware {
             LOGGER.info("提交{}任务",TaskTypeEnum.JUCAONET_COMPANY_LIST.getDesc ());
         }
 
-        for (Map.Entry<TaskTypeEnum, BaseCatcher> entry : catcherMap.entrySet ()) {
+        // 若没有查询到股票信息则清除调度信息
+        List<StockInfo> taskInfoList = stockInfoDao.selectList (new StockInfo ());
+        if (taskInfoList == null || taskInfoList.size () == 0) {
+            return;
+        }
+        for (Catcher catcher : CatcherRegisterCenter.getRegisterCatcher()) {
+            TaskTypeEnum type = catcher.getTaskType();
             // 跳过股票列表爬虫
-            if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (entry.getKey ())) {
+            if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (type)) {
                 continue;
             }
 
-            if (refreshCycle (entry.getKey ())) {
-                // 若没有查询到股票信息则清除调度信息
-                List<StockInfo> taskInfoList = stockInfoDao.selectList (new StockInfo ());
-                if (taskInfoList == null || taskInfoList.size () == 0) {
-                    return;
-                }
+            if (refreshCycle (type)) {
                 for (StockInfo stockInfo : taskInfoList) {
-                    commitCatchTask (entry.getKey (), stockInfo);
+                    commitCatchTask (type, stockInfo);
                 }
-                LOGGER.info("提交{}任务",entry.getKey ().getDesc ());
+                LOGGER.info("提交{}任务",type.getDesc ());
             }
         }
     }
@@ -163,13 +141,6 @@ public class TaskGenerateService implements ApplicationContextAware {
         // 更新调度时间
         scheduleMap.put (typeEnum, System.currentTimeMillis ());
         return true;
-    }
-
-    /**
-     * @return the catcherMap
-     */
-    public Map<TaskTypeEnum, BaseCatcher> getCatcherMap () {
-        return catcherMap;
     }
 
     /**

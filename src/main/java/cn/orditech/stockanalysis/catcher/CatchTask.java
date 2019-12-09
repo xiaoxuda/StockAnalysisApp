@@ -1,4 +1,4 @@
-package cn.orditech.stockanalysis.catcher.service;
+package cn.orditech.stockanalysis.catcher;
 
 import com.alibaba.fastjson.JSON;
 

@@ -2,6 +2,7 @@ package cn.orditech.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * 定时任务服务，时间单位以秒计算，最小单位60秒
  * Created by kimi on 2017/1/13.
  */
+@Component
 public class ScheduleTaskService {
     private static final Logger logger = LoggerFactory.getLogger (ScheduleTaskService.class);
     /**
@@ -29,16 +31,21 @@ public class ScheduleTaskService {
     /**
      * 任务池
      */
-    private static final LinkedList<ScheduleTaskEntity> taskPool =
-            new LinkedList<ScheduleTaskEntity> ();
+    private static final LinkedList<ScheduleTaskEntity> taskPool = new LinkedList<> ();
 
 
     /**
      * 任务执行器
      */
     private static final ThreadPoolExecutor executor = new ThreadPoolExecutor (1, 4, 60L, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable> ());
+            new LinkedBlockingQueue<> ());
 
+    /**
+     * 启动任务调度器
+     */
+    static {
+        new Thread (new Scheduler ()).start ();
+    }
 
     /**
      * 周期调度器，负责时间周期的控制，定期发起任务生产
@@ -53,7 +60,7 @@ public class ScheduleTaskService {
                     logger.info ("定时调度");
                     TimeUnit.SECONDS.sleep (MIN_TIME_UNIT);
                 } catch (InterruptedException e) {
-                    e.printStackTrace ();
+                    logger.info("Scheduler interrupted", e);
                 }
             }
         }
@@ -95,13 +102,6 @@ public class ScheduleTaskService {
                 lastScheduleTime = currentTime;
             }
         }
-    }
-
-    /**
-     * 启动任务调度器
-     */
-    static {
-        new Thread (new Scheduler ()).start ();
     }
 
     /**
