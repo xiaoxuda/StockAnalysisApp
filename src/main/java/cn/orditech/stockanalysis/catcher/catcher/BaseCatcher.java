@@ -53,6 +53,7 @@ public abstract class BaseCatcher implements Catcher {
 
     @PostConstruct
     public void init () {
+        //将当前爬虫任务执行注册到定时调度器
         ScheduleTaskService.commitTask (new CatcherSchedulerTask ());
         //爬虫注册
         CatcherRegisterCenter.register(getTaskType(), this);

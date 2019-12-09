@@ -92,7 +92,7 @@ public class FinancailStatementCatcher extends BaseCatcher {
     }
 
     public boolean createOrUpdateJqka (JSONArray list, CatchTask task) {
-        List<String[]> aList = new ArrayList<String[]> ();
+        List<String[]> aList = new ArrayList<> ();
         int num = list.size ();
         for (int i = 0;i< num;i++) {
             JSONArray jsonArray = list.getJSONArray (i);
@@ -109,16 +109,16 @@ public class FinancailStatementCatcher extends BaseCatcher {
                 FinancailStatement financailStatement = new FinancailStatement();
                 financailStatement.setCode((String) task.getInfoValue("code"));
                 financailStatement.setDate(aList.get(0)[i]);
-                financailStatement.setPe(extractData(aList.get(1)[i]));
-                financailStatement.setMp(extractData(aList.get(2)[i]));
-                financailStatement.setOpgr(extractData(aList.get(3)[i]));
-                financailStatement.setMpbpc(extractData(aList.get(4)[i]));
-                financailStatement.setToi(extractData(aList.get(6)[i]));
+                financailStatement.setMp(extractData(aList.get(1)[i]));
+                financailStatement.setOpgr(extractData(aList.get(2)[i]));
+                financailStatement.setMpbpc(extractData(aList.get(3)[i]));
+                financailStatement.setToi(extractData(aList.get(5)[i]));
+                financailStatement.setPe(extractData(aList.get(7)[i]));
                 financailStatement.setBvps(extractData(aList.get(8)[i]));
-                financailStatement.setRoe(extractData(aList.get(9)[i]));
-                financailStatement.setDtar(extractData(aList.get(11)[i]));
-                financailStatement.setCps(extractData(aList.get(14)[i]));
-                financailStatement.setSgpr(extractData(aList.get(15)[i]));
+                financailStatement.setCps(extractData(aList.get(11)[i]));
+                financailStatement.setSmpr(extractData(aList.get(12)[i]));
+                financailStatement.setRoe(extractData(aList.get(13)[i]));
+                financailStatement.setDtar(extractData(aList.get(21)[i]));
 
                 stockDataService.fsUpdateOrInsert(financailStatement);
             }catch (Exception e){

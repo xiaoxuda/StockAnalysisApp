@@ -60,7 +60,7 @@ public class ScheduleTaskService {
                     logger.info ("定时调度");
                     TimeUnit.SECONDS.sleep (MIN_TIME_UNIT);
                 } catch (InterruptedException e) {
-                    ;
+                    logger.info("Scheduler interrupted", e);
                 }
             }
         }

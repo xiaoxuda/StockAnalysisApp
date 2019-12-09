@@ -60,11 +60,6 @@ public class FinancailStatement extends BaseEntity implements Serializable {
     private java.lang.Double dtar;
 
     /**
-     * 同比净利润增长率
-     **/
-    private java.lang.Double opgr;
-
-    /**
      * 营业总收入
      **/
     private java.lang.Double toi;
@@ -98,6 +93,11 @@ public class FinancailStatement extends BaseEntity implements Serializable {
      * 净利润
      **/
     private java.lang.Double mp;
+
+    /**
+     * 同比净利润增长率
+     **/
+    private java.lang.Double opgr;
 
     /**
      * 归属母公司的净利润
