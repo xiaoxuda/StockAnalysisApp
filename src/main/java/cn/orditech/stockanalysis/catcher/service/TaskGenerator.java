@@ -104,7 +104,7 @@ public class TaskGenerator {
         // 生成股票列表抓取任务
         if (refreshCycle (TaskTypeEnum.JUCAONET_COMPANY_LIST)) {
             commitCatchTask (TaskTypeEnum.JUCAONET_COMPANY_LIST, null);
-            LOGGER.info("提交{}任务",TaskTypeEnum.JUCAONET_COMPANY_LIST.getDesc ());
+            LOGGER.info("提交{}任务,任务数量taskNum:{}",TaskTypeEnum.JUCAONET_COMPANY_LIST.getDesc (), 1);
         }
 
         // 若没有查询到股票信息则清除调度信息
@@ -123,7 +123,7 @@ public class TaskGenerator {
                 for (StockInfo stockInfo : taskInfoList) {
                     commitCatchTask (type, stockInfo);
                 }
-                LOGGER.info("提交{}任务",type.getDesc ());
+                LOGGER.info("提交{}任务,任务数量taskNum:{}",type.getDesc (), taskInfoList.size());
             }
         }
     }
