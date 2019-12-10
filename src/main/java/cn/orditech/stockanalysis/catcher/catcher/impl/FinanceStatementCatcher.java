@@ -77,13 +77,7 @@ public class FinanceStatementCatcher extends BaseCatcher {
 
     @Override
     public boolean extractAndPersistence (String src, CatchTask task) {
-        boolean ret = extract10jqka (src, task);
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            LOGGER.info("FinanceStatementCatcher sleep fail", e);
-        }
-        return ret;
+        return extract10jqka (src, task);
     }
 
     public double extractData (String s) {
