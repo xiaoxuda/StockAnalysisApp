@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -170,7 +171,7 @@ public abstract class BaseCatcher implements Catcher {
             while (true) {
                 CatchTask task = taskQueueService.getTask (getTaskType ());
                 if (task == null) {
-                    interval = interval < maxInterval ? (interval + defaultInterval) : interval;
+                    interval = interval < maxInterval ? (interval + defaultInterval) : maxInterval;
                     LOGGER.info ("{}:没有爬取任务,爬虫定时任务延长执行时间, interval:{}", getTaskType (), interval);
                     break;
                 } else {
@@ -180,20 +181,27 @@ public abstract class BaseCatcher implements Catcher {
                     }
                     //当前处理器核心达到最大任务数量且由任务等待执行则停止添加任务，将当前任务放回队列的顶部
                     if (executor.getQueue ().size () >= TASK_CAPACITY && executor.getPoolSize () >= executor.getMaximumPoolSize ()) {
-                        LOGGER.info ("爬虫任务队列已满" +
-                                "\n     taskSize={}" +
-                                "\n     maxPoolSize={}" +
-                                "\n     poolSize={}" +
-                                "\n     completedTaskCount={}",
+                        LOGGER.info ("爬虫任务队列已满，提交任务被拒绝,taskSize={},maxPoolSize={},poolSize={},queueSize={},completedTaskCount={}",
                                 executor.getQueue ().size (),
                                 executor.getMaximumPoolSize (),
                                 executor.getPoolSize (),
+                                executor.getQueue().size(),
                                 executor.getCompletedTaskCount ());
                         taskQueueService.paybackTask (task);
                         break;
                     }
                     //提交任务
-                    executor.submit (new CatcherRunnable (task));
+                    try {
+                        executor.submit(new CatcherRunnable(task));
+                    } catch (RejectedExecutionException ex){
+                        LOGGER.info ("爬虫任务队列已满，提交任务被拒绝,taskSize={},maxPoolSize={},poolSize={},queueSize={},completedTaskCount={}",
+                                executor.getQueue ().size (),
+                                executor.getMaximumPoolSize (),
+                                executor.getPoolSize (),
+                                executor.getQueue().size(),
+                                executor.getCompletedTaskCount ());
+                        taskQueueService.paybackTask (task);
+                    }
                 }
             }
         }

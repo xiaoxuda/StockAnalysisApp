@@ -3,10 +3,12 @@ package cn.orditech.stockanalysis.controller;
 import cn.orditech.stockanalysis.catcher.enums.TaskTypeEnum;
 import cn.orditech.stockanalysis.catcher.service.CatcherRegisterCenter;
 import cn.orditech.stockanalysis.catcher.service.TaskGenerator;
+import cn.orditech.stockanalysis.catcher.service.TaskQueueService;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.stockanalysis.query.StockInfoQuery;
 import cn.orditech.stockanalysis.service.StockDataQueryService;
 import cn.orditech.stockanalysis.service.StockDataShowService;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,8 @@ public class MyController {
     private TaskGenerator taskGenerator;
     @Value ("${generate.lock.Key}")
     private String generateLockKey;
+    @Autowired
+    private TaskQueueService taskQueueService;
 
     private static Logger logger = LoggerFactory.getLogger (MyController.class);
 
@@ -87,5 +92,15 @@ public class MyController {
         }
         taskGenerator.commitCatchTask (TaskTypeEnum.getByCode (typeEnumCode), false);
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping("/staticTaskInfo")
+    public String staticTaskInfo(){
+        Map<TaskTypeEnum, Integer> taskQueueInfo = new HashMap<>();
+        for(TaskTypeEnum taskType : taskQueueService.getTypeSet()){
+            taskQueueInfo.put(taskType, taskQueueService.getByTaskType(taskType).size());
+        }
+        return JSONObject.toJSONString(taskQueueInfo);
     }
 }
