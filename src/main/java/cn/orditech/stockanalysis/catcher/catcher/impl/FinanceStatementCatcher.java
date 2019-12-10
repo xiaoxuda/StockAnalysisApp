@@ -13,14 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 抓取上市公司财务报表
  * @author kimi
  */
 @Component
-public class FinancailStatementCatcher extends BaseCatcher {
+public class FinanceStatementCatcher extends BaseCatcher {
 
     @Autowired
     private StockDataService stockDataService;
@@ -87,42 +89,71 @@ public class FinancailStatementCatcher extends BaseCatcher {
         }
         JSONObject jsonObject = JSONObject.parseObject (json);
         JSONArray content = jsonObject.getJSONArray ("report");
-        createOrUpdateJqka(content, task);
+        JSONArray title = jsonObject.getJSONArray("title");
+        createOrUpdateJqka(title, content, task);
         return false;
     }
 
-    public boolean createOrUpdateJqka (JSONArray list, CatchTask task) {
-        List<String[]> aList = new ArrayList<> ();
-        int num = list.size ();
+    public boolean createOrUpdateJqka (JSONArray titleList, JSONArray contentList, CatchTask task) {
+        List<String[]> valList = new ArrayList<> ();
+        Map<String, Integer> idxMap = new HashMap<>();
+        int num = contentList.size ();
+        for (int i = 1;i< num;i++) {
+            idxMap.put(titleList.getJSONArray(i).getString(0), i);
+        }
         for (int i = 0;i< num;i++) {
-            JSONArray jsonArray = list.getJSONArray (i);
+            JSONArray jsonArray = contentList.getJSONArray (i);
             int len = jsonArray.size ();
             String[] valueArr = new String[len];
             for(int j=0;j<len;j++){
                 valueArr[j] = (jsonArray.getString (j));
             }
-            aList.add (valueArr);
+            valList.add (valueArr);
         }
-        int size = aList.get (0).length;
+        int size = valList.get (0).length;
         for (int i = 0; i < size; i++) {
             try {
                 FinancailStatement financailStatement = new FinancailStatement();
                 financailStatement.setCode((String) task.getInfoValue("code"));
-                financailStatement.setDate(aList.get(0)[i]);
-                financailStatement.setMp(extractData(aList.get(1)[i]));
-                financailStatement.setOpgr(extractData(aList.get(2)[i]));
-                financailStatement.setMpbpc(extractData(aList.get(3)[i]));
-                financailStatement.setToi(extractData(aList.get(5)[i]));
-                financailStatement.setPe(extractData(aList.get(7)[i]));
-                financailStatement.setBvps(extractData(aList.get(8)[i]));
-                financailStatement.setCps(extractData(aList.get(11)[i]));
-                financailStatement.setSmpr(extractData(aList.get(12)[i]));
-                financailStatement.setRoe(extractData(aList.get(13)[i]));
-                financailStatement.setDtar(extractData(aList.get(21)[i]));
+                financailStatement.setDate(valList.get(0)[i]);
+                if(idxMap.get("净利润") != null) {
+                    financailStatement.setMp(extractData(valList.get(idxMap.get("净利润"))[i]));
+                }
+                if(idxMap.get("净利润同比增长率") != null) {
+                    financailStatement.setOpgr(extractData(valList.get(idxMap.get("净利润同比增长率"))[i]));
+                }
+                if(idxMap.get("扣非净利润") != null) {
+                    financailStatement.setMpbpc(extractData(valList.get(idxMap.get("扣非净利润"))[i]));
+                }
+                if(idxMap.get("营业总收入") != null) {
+                    financailStatement.setToi(extractData(valList.get(idxMap.get("营业总收入"))[i]));
+                }
+
+                if(idxMap.get("基本每股收益") != null) {
+                    financailStatement.setPe(extractData(valList.get(idxMap.get("基本每股收益"))[i]));
+                }
+                if(idxMap.get("每股净资产") != null) {
+                    financailStatement.setBvps(extractData(valList.get(idxMap.get("每股净资产"))[i]));
+                }
+                if(idxMap.get("每股经营现金流") != null) {
+                    financailStatement.setCps(extractData(valList.get(idxMap.get("每股经营现金流"))[i]));
+                }
+                if(idxMap.get("销售净利率") != null) {
+                    financailStatement.setSmpr(extractData(valList.get(idxMap.get("销售净利率"))[i]));
+                }
+                if(idxMap.get("销售毛利率") != null) {
+                    financailStatement.setSgpr(extractData(valList.get(idxMap.get("销售毛利率"))[i]));
+                }
+                if(idxMap.get("净资产收益率") != null) {
+                    financailStatement.setRoe(extractData(valList.get(idxMap.get("净资产收益率"))[i]));
+                }
+                if(idxMap.get("资产负债比率") != null) {
+                    financailStatement.setDtar(extractData(valList.get(idxMap.get("资产负债比率"))[i]));
+                }
 
                 stockDataService.fsUpdateOrInsert(financailStatement);
             }catch (Exception e){
-                LOGGER.warn("createOrUpdateJqka fail code={},date={}", task.getInfoValue("code"), aList.get(0)[i], e);
+                LOGGER.warn("createOrUpdateJqka fail code={},date={}", task.getInfoValue("code"), valList.get(0)[i], e);
                 continue;
             }
         }
