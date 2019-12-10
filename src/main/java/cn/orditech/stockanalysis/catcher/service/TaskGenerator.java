@@ -90,6 +90,7 @@ public class TaskGenerator {
         if (taskInfoList == null || taskInfoList.size () == 0) {
             return;
         }
+        LOGGER.info("提交{}任务,任务数量taskNum:{}",typeEnum.getDesc (), taskInfoList.size());
         for (StockInfo stockInfo : taskInfoList) {
             commitCatchTask (typeEnum, stockInfo);
         }

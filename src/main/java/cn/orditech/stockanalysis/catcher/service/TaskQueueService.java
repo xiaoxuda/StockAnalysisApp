@@ -111,4 +111,13 @@ public class TaskQueueService {
         }
         return taskQueue;
     }
+
+    /**
+     * 根据任务类型返回任务列表
+     * @param taskType
+     * @return
+     */
+    public LinkedBlockingQueue<CatchTask> getByTaskType(TaskTypeEnum taskType){
+        return queueMap.get(taskType);
+    }
 }
