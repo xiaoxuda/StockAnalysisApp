@@ -9,6 +9,8 @@ import cn.orditech.stockanalysis.service.StockDataService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 抓取上市公司财务报表
@@ -24,8 +29,46 @@ import java.util.Map;
 @Component
 public class FinanceStatementCatcher extends BaseCatcher {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger (FinanceStatementCatcher.class);
+
     @Autowired
     private StockDataService stockDataService;
+
+    private ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 2, 1,
+            TimeUnit.MINUTES, new LinkedBlockingQueue<>(), r -> new FinanceStatementThread(r));
+
+    public static class FinanceStatementThread extends Thread{
+        private Runnable target;
+        private String name;
+        private static int threadInitNumber;
+
+        private static synchronized int nextThreadNum() {
+            return threadInitNumber++;
+        }
+
+        public FinanceStatementThread(Runnable r){
+            this.target = r;
+            this.name = "FinanceStatementThread-" + nextThreadNum();
+        }
+
+        @Override
+        public void run(){
+            if(this.target != null){
+                try {
+                    //抓去任务容易被限流，休眠1s中执行，降低qps
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    LOGGER.info("FinanceStatementThread sleep fail", e);
+                }
+                this.target.run();
+            }
+        }
+    }
+
+    @Override
+    protected ThreadPoolExecutor getExecutor(){
+        return this.executor;
+    }
 
     @Override
     public TaskTypeEnum getTaskType () {
@@ -34,7 +77,13 @@ public class FinanceStatementCatcher extends BaseCatcher {
 
     @Override
     public boolean extractAndPersistence (String src, CatchTask task) {
-        return extract10jqka (src, task);
+        boolean ret = extract10jqka (src, task);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            LOGGER.info("FinanceStatementCatcher sleep fail", e);
+        }
+        return ret;
     }
 
     public double extractData (String s) {
