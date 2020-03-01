@@ -45,4 +45,19 @@ public class DailyTradeDetailDao extends BaseDao<DailyTradeDetail, DailyTradeDet
         parMap.put("sc",sc);
         return this.getSqlSession ().update (this.getNameSpace () + ".udpateMarketValue", parMap);
     }
+
+    /**
+     * 根据日期分页查询交易信息
+     * @param date 格式yyyy-MM-dd
+     * @param minId 查询的起始数据
+     * @param pageSize 查询数量
+     * @return
+     */
+    public List<DailyTradeDetail> pageFindByDateOrderById(String date, Long minId, Integer pageSize){
+        Map<String, Object> map = new HashMap<>();
+        map.put("date", date);
+        map.put("minId", minId);
+        map.put("pageSize", pageSize);
+        return this.getSqlSession().selectList(this.getNameSpace() + ".pageFindByDateOrderById", map);
+    }
 }

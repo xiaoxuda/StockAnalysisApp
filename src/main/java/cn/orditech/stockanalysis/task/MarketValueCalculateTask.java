@@ -1,23 +1,30 @@
 package cn.orditech.stockanalysis.task;
 
 import cn.orditech.schedule.ScheduleTask;
+import cn.orditech.schedule.ScheduleTaskService;
 import cn.orditech.stockanalysis.entity.DailyTradeDetail;
 import cn.orditech.stockanalysis.dao.DailyTradeDetailDao;
 import cn.orditech.stockanalysis.dao.StockInfoDao;
 import cn.orditech.stockanalysis.entity.StockInfo;
 import cn.orditech.tools.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 市值计算任务
- * Created by kimi on 2017/1/18.
+ *
+ * @author kimi
+ * @date 2017/1/18
  */
+@Component
 public class MarketValueCalculateTask extends ScheduleTask {
-
+    @Autowired
     private StockInfoDao stockInfoDao;
-
+    @Autowired
     private DailyTradeDetailDao dailyTradeDetailDao;
 
     /**
@@ -40,6 +47,11 @@ public class MarketValueCalculateTask extends ScheduleTask {
         return cycleInterval;
     }
 
+    @PostConstruct
+    public void register(){
+        ScheduleTaskService.commitTask(this);
+    }
+
     @Override
     public void run () {
         //周期递增，到240个周期时还原
@@ -59,13 +71,5 @@ public class MarketValueCalculateTask extends ScheduleTask {
                         dailyTradeDetail.getDate (),marketValue,stockInfo.getSc ());
             }
         }
-    }
-
-    public void setStockInfoDao (StockInfoDao stockInfoDao) {
-        this.stockInfoDao = stockInfoDao;
-    }
-
-    public void setDailyTradeDetailDao (DailyTradeDetailDao dailyTradeDetailDao) {
-        this.dailyTradeDetailDao = dailyTradeDetailDao;
     }
 }
