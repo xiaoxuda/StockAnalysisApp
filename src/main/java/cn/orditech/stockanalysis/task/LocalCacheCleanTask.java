@@ -2,14 +2,18 @@ package cn.orditech.stockanalysis.task;
 
 
 import cn.orditech.schedule.ScheduleTask;
+import cn.orditech.schedule.ScheduleTaskService;
 import cn.orditech.stockanalysis.tool.CacheTool;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Calendar;
 
 /**
  * 本地缓存清理
  * Created by kimi on 2017/3/12.
  */
+@Component
 public class LocalCacheCleanTask extends ScheduleTask {
     @Override
     public boolean isExecNow () {
@@ -19,6 +23,11 @@ public class LocalCacheCleanTask extends ScheduleTask {
     @Override
     public long cycleInterval () {
         return 5L;
+    }
+
+    @PostConstruct
+    public void register(){
+        ScheduleTaskService.commitTask(this);
     }
 
     @Override

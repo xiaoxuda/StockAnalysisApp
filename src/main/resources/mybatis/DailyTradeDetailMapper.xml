@@ -6,6 +6,7 @@
 <!-- 数据库基本操作 -->
 <mapper namespace="cn.orditech.stockanalysis.dao.DailyTradeDetailDao">
     <sql id="columnMap">
+            id as id,
         	code as code,
         	date as date,
         	last_end_price as lastEndPrice,
@@ -85,6 +86,8 @@
         <if test="tradeAmt!=null">,trade_amt = #{tradeAmt}</if>
         <if test="marketValue!=null">,market_value = #{marketValue}</if>
         <if test="sc!=null">,sc = #{sc}</if>
+        <if test="peStatic != null">,pe_static = #{peStatic}</if>
+        <if test="peDynamic!=null"> ,pe_dynamic = #{peDynamic}</if>
         WHERE
         code = #{code} And
         date = #{date}
@@ -135,5 +138,13 @@
         <if test="sc!=null">,sc = #{sc}</if>
         WHERE `code` = #{code} AND `date` = #{date}
     </update>
+
+    <select id="pageFindByDateOrderById" parameterType="java.util.Map" resultType="cn.orditech.stockanalysis.entity.DailyTradeDetail">
+        select <include refid="columnMap"/>
+        from `daily_trade_detail`
+        where id >= #{minId} and `date` = #{date}
+        order by id asc
+        limit #{pageSize}
+    </select>
 </mapper>
 

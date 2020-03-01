@@ -10,6 +10,11 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
 
     /**
+     * 数据id
+     */
+    private Long id;
+
+    /**
      * 股票代码
      **/
     private java.lang.String code;
@@ -64,6 +69,15 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
      */
     private Long sc;
 
+    /**
+     * 静态市盈利率
+     */
+    private Float peStatic;
+    /**
+     * 动态市盈利率
+     */
+    private Float peDynamic;
+
     public DailyTradeDetail () {
     }
 
@@ -73,6 +87,14 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
     ) {
         this.code = code;
         this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCode (java.lang.String value) {
@@ -161,6 +183,22 @@ public class DailyTradeDetail extends BaseEntity implements Serializable {
 
     public void setSc (Long sc) {
         this.sc = sc;
+    }
+
+    public Float getPeStatic() {
+        return peStatic;
+    }
+
+    public void setPeStatic(Float peStatic) {
+        this.peStatic = peStatic;
+    }
+
+    public Float getPeDynamic() {
+        return peDynamic;
+    }
+
+    public void setPeDynamic(Float peDynamic) {
+        this.peDynamic = peDynamic;
     }
 }
 
