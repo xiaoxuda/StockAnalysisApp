@@ -59,7 +59,7 @@ public class StockInfoDetailCatcher extends BaseCatcher {
         String type = null;
         if(stockInfo.getCode().startsWith("0") || stockInfo.getCode().startsWith("3")){
             type = "SZ";
-        } else if(stockInfo.getCode().startsWith("6")){
+        } else if(stockInfo.getCode().startsWith("6") || stockInfo.getCode().startsWith("9")){
             type = "SH";
         } else {
             LOGGER.warn("无法识别的股票类型，stockInfo={}", JSONObject.toJSONString(stockInfo));
