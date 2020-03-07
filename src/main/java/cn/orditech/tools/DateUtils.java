@@ -31,15 +31,17 @@ public class DateUtils {
      * 基于当前日期获取指定季度的财务报告日期
      *
      * @param quarterGap 相对于当前季度的向前偏移量，必须大于0
+     * @param dateStr
      * @return
      * @throws Exception
      */
-    public static String getQuarterFinanceReportDate (int quarterGap) {
+    public static String getQuarterFinanceReportDate (String dateStr, int quarterGap) {
         if(quarterGap <= 0){
             throw new IllegalArgumentException("quarterGap must bigger than zero!");
         }
         try {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DAY.parse(dateStr));
             int month = calendar.get(Calendar.MONTH);
             int gap = 0 - (month + 1) % 3;
             if(gap == 0){
@@ -57,14 +59,16 @@ public class DateUtils {
      * 基于当前时间获取指定年度的财务报告日期
      *
      * @param yearGap 相对于当前日期的财务报告向后偏移量
+     * @param dateStr
      * @return
      */
-    public static String getYearFinanceReportDate (int yearGap) {
+    public static String getYearFinanceReportDate (String dateStr, int yearGap) {
         if(yearGap <= 0){
             throw new IllegalArgumentException("yearGap must bigger than zero!");
         }
         try {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DAY.parse(dateStr));
             calendar.add(Calendar.YEAR, -yearGap);
             calendar.set(Calendar.MONTH, 11);
             calendar.set(Calendar.DAY_OF_MONTH, 31);

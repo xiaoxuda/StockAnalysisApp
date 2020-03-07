@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author kimi
  * 抓取股票代码与名称、股票类型
  */
-//@Component
+@Component
 public class StockInfoCatcher extends BaseCatcher {
 
     @Autowired

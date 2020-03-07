@@ -102,12 +102,6 @@ public class TaskGenerator {
      * 生成爬虫任务,上市公司列表的任务除外
      */
     public void commitCatchTaskAll () {
-        // 生成股票列表抓取任务
-        if (refreshCycle (TaskTypeEnum.JUCAONET_COMPANY_LIST)) {
-            commitCatchTask (TaskTypeEnum.JUCAONET_COMPANY_LIST, null);
-            LOGGER.info("提交{}任务,任务数量taskNum:{}",TaskTypeEnum.JUCAONET_COMPANY_LIST.getDesc (), 1);
-        }
-
         // 若没有查询到股票信息则清除调度信息
         List<StockInfo> taskInfoList = stockInfoDao.selectList (new StockInfo ());
         if (taskInfoList == null || taskInfoList.size () == 0) {
@@ -115,8 +109,8 @@ public class TaskGenerator {
         }
         for (Catcher catcher : CatcherRegisterCenter.getRegisterCatcher()) {
             TaskTypeEnum type = catcher.getTaskType();
-            // 跳过股票列表爬虫
-            if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (type)) {
+            // 跳过股票列表爬虫和历史交易爬虫
+            if (TaskTypeEnum.JUCAONET_COMPANY_LIST.equals (type) || TaskTypeEnum.SINAJS_HISTORY_TRADE_DETAIL.equals(type)) {
                 continue;
             }
 

@@ -50,32 +50,36 @@ public class PeCalculateTask extends ScheduleTask {
         ScheduleTaskService.commitTask(this);
     }
 
+    public Date targetDate = null;
+    public void setTargetDate(Date date){
+        targetDate = date;
+    }
+
     @Override
     public void run () {
         //周期递增，到240个周期时还原
         cycleInterval = cycleInterval > 4 * 60 ? DefaultCycleInterval : cycleInterval * 2;
 
         Long minId = 1L;
-        Date today = new Date();
         Integer pageSize = 100;
         List<DailyTradeDetail> tradeList;
-        String todayStr = DateUtils.getDayStr(today);
+        String todayStr = DateUtils.getDayStr(targetDate == null ? new Date() : targetDate);
         FinancailStatement finance = new FinancailStatement();
         do {
             tradeList = dailyTradeDetailDao.pageFindByDateOrderById(todayStr, minId, pageSize);
             if(tradeList.size() > 0){
                 for(DailyTradeDetail detail : tradeList){
                     finance.setCode(detail.getCode());
-                    finance.setDate(DateUtils.getQuarterFinanceReportDate(1));
+                    finance.setDate(DateUtils.getQuarterFinanceReportDate(todayStr, 1));
                     FinancailStatement lastQuarterFinance = financailStatementDao.selectOne(finance);
                     if(lastQuarterFinance == null){
-                        finance.setDate(DateUtils.getQuarterFinanceReportDate(2));
+                        finance.setDate(DateUtils.getQuarterFinanceReportDate(todayStr, 2));
                         lastQuarterFinance = financailStatementDao.selectOne(finance);
                     }
-                    finance.setDate(DateUtils.getYearFinanceReportDate(1));
+                    finance.setDate(DateUtils.getYearFinanceReportDate(todayStr, 1));
                     FinancailStatement lastYearFinance = financailStatementDao.selectOne(finance);
                     if(lastYearFinance == null){
-                        finance.setDate(DateUtils.getYearFinanceReportDate(2));
+                        finance.setDate(DateUtils.getYearFinanceReportDate(todayStr, 2));
                         lastYearFinance = financailStatementDao.selectOne(finance);
                     }
 

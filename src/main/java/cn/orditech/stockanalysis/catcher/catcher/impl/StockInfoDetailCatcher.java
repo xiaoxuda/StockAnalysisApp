@@ -69,13 +69,5 @@ public class StockInfoDetailCatcher extends BaseCatcher {
         return task;
     }
 
-    public static void main(String[] args) {
-        StockInfoDetailCatcher catcher = new StockInfoDetailCatcher();
-        StockInfo stockInfo = new StockInfo();
-        stockInfo.setCode("000001");
-        stockInfo.setType("szmb");
-        CatchTask task = catcher.generateTask(stockInfo);
-        catcher.catchAction(task, 0);
-    }
 
 }
