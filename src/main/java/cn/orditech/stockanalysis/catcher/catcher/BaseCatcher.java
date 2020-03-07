@@ -30,7 +30,7 @@ public abstract class BaseCatcher implements Catcher {
     /**
      * 为每个子类提供一个区别化的日志类
      **/
-    protected final Logger LOGGER = null;//LoggerFactory.getLogger (this.getClass ());
+    protected final Logger LOGGER = LoggerFactory.getLogger (this.getClass ());
 
     /**
      * 事务
