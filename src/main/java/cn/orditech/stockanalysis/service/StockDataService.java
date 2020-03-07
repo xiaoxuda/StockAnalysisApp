@@ -51,6 +51,7 @@ public class StockDataService {
         }
 
         int updateCnt = transactionTemplate.execute (new TransactionCallback<Integer> () {
+            @Override
             public Integer doInTransaction (TransactionStatus arg0) {
                 int cnt = 0;
                 if (isNullToSave) {
