@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>  
     <settings>  
-        <setting name="logImpl" value="LOG4J"/>  
-    </settings>  
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
 </configuration> 

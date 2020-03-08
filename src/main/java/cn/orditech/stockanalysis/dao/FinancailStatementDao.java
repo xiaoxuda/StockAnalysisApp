@@ -1,16 +1,14 @@
 
 package cn.orditech.stockanalysis.dao;
 
-import java.text.DateFormat;
+import cn.orditech.stockanalysis.entity.FinancailStatement;
+import org.springframework.stereotype.Repository;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cn.orditech.stockanalysis.entity.FinancailStatement;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author kimi

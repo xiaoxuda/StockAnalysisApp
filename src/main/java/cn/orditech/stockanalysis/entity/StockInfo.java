@@ -14,6 +14,8 @@ public class StockInfo extends BaseEntity implements Serializable {
     //date formats
     public static final String FORMAT_MODIFY_TIME = DATE_TIME_FORMAT;
 
+    private Long id;
+
     /**
      * 股票交易代码
      **/
@@ -46,6 +48,14 @@ public class StockInfo extends BaseEntity implements Serializable {
             java.lang.String code
     ) {
         this.code = code;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCode (java.lang.String value) {

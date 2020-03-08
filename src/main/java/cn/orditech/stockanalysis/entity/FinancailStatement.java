@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class FinancailStatement extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
 
+    private Long id;
+
     /**
      * 股票代码
      **/
@@ -149,6 +151,14 @@ public class FinancailStatement extends BaseEntity implements Serializable {
     ) {
         this.code = code;
         this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCode (java.lang.String value) {

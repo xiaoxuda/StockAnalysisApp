@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.stockanalysis.dao.TencentDao">
+
+    <select id="pageFindTradeDetail" parameterType="java.lang.Long" resultType="cn.orditech.stockanalysis.entity.DailyTradeDetail">
+        select *
+        from daily_trade_detail
+        where id > #{minId}
+        order by id asc
+        limit 200;
+    </select>
+
+    <insert id="batchInsertTradeDetail" parameterType="java.util.Map">
+        INSERT INTO `daily_trade_detail` (
+        	code ,
+        	date ,
+        	last_end_price ,
+        	start_price ,
+        	max_price ,
+        	min_price ,
+        	end_price ,
+        	trade_volume ,
+        	trade_amt,
+        	market_value,
+        	sc,
+            pe_static,
+            pe_dynamic
+        ) VALUES
+        <foreach collection="tradeList" open="" separator="," close="" item="trade">
+            (
+            #{trade.code} ,
+            #{trade.date} ,
+            #{trade.lastEndPrice} ,
+            #{trade.startPrice} ,
+            #{trade.maxPrice} ,
+            #{trade.minPrice} ,
+            #{trade.endPrice} ,
+            #{trade.tradeVolume} ,
+            #{trade.tradeAmt},
+            #{trade.marketValue},
+            #{trade.sc},
+            #{trade.peStatic},
+            #{trade.peDynamic}
+            )
+        </foreach>
+    </insert>
+
+    <select id="pageFindStockDetail" parameterType="java.lang.Long" resultType="cn.orditech.stockanalysis.entity.StockInfo">
+        select *
+        from stock_info
+        where id > #{minId}
+        order by id asc
+        limit 200;
+    </select>
+
+    <insert id="batchInsertStockDetail" parameterType="cn.orditech.stockanalysis.entity.StockInfo">
+            INSERT INTO `stock_info` (
+            code ,
+            type ,
+            name ,
+            sc ,
+            price
+            ) VALUES
+        <foreach collection="stockList" open="" separator="," close="" item="stock">
+            (
+            #{stock.code} ,
+            #{stock.type} ,
+            #{stock.name} ,
+            #{stock.sc} ,
+            #{stock.price}
+            )
+        </foreach>
+    </insert>
+
+    <select id="pageFindFinanceDetail" parameterType="java.lang.Long" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
+        select *
+        from financail_statement
+        where id > #{minId}
+        order by id asc
+        limit 200;
+    </select>
+
+    <insert id="batchInsertFinanceDetail" parameterType="cn.orditech.stockanalysis.entity.FinancailStatement">
+
+            INSERT INTO `financail_statement` (
+            code ,
+            date ,
+            pe ,
+            bvps ,
+            cps ,
+            roe ,
+            jroe ,
+            sgpr ,
+            smpr ,
+            dtar ,
+            opgr ,
+            toi ,
+            toc ,
+            oi ,
+            oc ,
+            op ,
+            tp ,
+            mp ,
+            mpbpc ,
+            ta ,
+            tl ,
+            se ,
+            tacf ,
+            iacf ,
+            facf ,
+            cnca
+            ) VALUES
+        <foreach collection="financeList" open="" separator="," close="" item="finance">
+            (
+            #{finance.code} ,
+            #{finance.date} ,
+            #{finance.pe} ,
+            #{finance.bvps} ,
+            #{finance.cps} ,
+            #{finance.roe} ,
+            #{finance.jroe} ,
+            #{finance.sgpr} ,
+            #{finance.smpr} ,
+            #{finance.dtar} ,
+            #{finance.opgr} ,
+            #{finance.toi} ,
+            #{finance.toc} ,
+            #{finance.oi} ,
+            #{finance.oc} ,
+            #{finance.op} ,
+            #{finance.tp} ,
+            #{finance.mp} ,
+            #{finance.mpbpc} ,
+            #{finance.ta} ,
+            #{finance.tl} ,
+            #{finance.se} ,
+            #{finance.tacf} ,
+            #{finance.iacf} ,
+            #{finance.facf} ,
+            #{finance.cnca}
+            )
+        </foreach>
+    </insert>
+
+</mapper>
+

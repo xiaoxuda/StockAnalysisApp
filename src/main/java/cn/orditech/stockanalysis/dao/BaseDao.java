@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * 数据库操作基类
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseDao<T, K> {
     @Autowired
+    @Qualifier("sqlSession")
     protected SqlSessionTemplate sqlSession;
 
     /**
