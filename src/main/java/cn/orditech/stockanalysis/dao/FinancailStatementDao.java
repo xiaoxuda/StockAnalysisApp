@@ -33,6 +33,6 @@ public class FinancailStatementDao extends BaseDao<FinancailStatement, Financail
         calendar.add(Calendar.YEAR, -4);
         calendar.set (Calendar.MONTH, 1);
         parMap.put("startDate", new SimpleDateFormat ("yyyy-MM-dd").format (calendar.getTime()));
-        return this.getSqlSession ().selectList (this.getNameSpace () + ".selectListByQuarterDesc", parMap);
+        return this.getSqlSession ().selectList (this.getNameSpace () + ".selectListByYearDesc", parMap);
     }
 }

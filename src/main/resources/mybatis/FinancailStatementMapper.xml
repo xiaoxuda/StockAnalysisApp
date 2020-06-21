@@ -207,7 +207,7 @@
         <if test="cnca!=null">AND cnca = #{cnca}</if>
     </select>
 
-    <select id="selectListByQuarterDesc" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
+    <select id="selectListByYearDesc" resultType="cn.orditech.stockanalysis.entity.FinancailStatement">
         SELECT
         <include refid="columnMap"></include>
         FROM `financail_statement`
